@@ -1,0 +1,16 @@
+<package format="2">
+	<name>moveit_serialization</name>
+	<version>0.0.0</version>
+	<description>Minimal examples for debugginf MoveIt</description>
+
+	<license>BSD</license>
+	<maintainer email="captain.yoshisaur@gmail.com">Captain Yoshi</maintainer>
+
+	<buildtool_depend>catkin</buildtool_depend>
+
+	<depend>boost</depend>
+	<depend>eigen</depend>
+	<depend>roscpp</depend>
+	<depend>moveit_msgs</depend>
+	<depend>moveit_serialization_yamlcpp</depend>
+</package>
