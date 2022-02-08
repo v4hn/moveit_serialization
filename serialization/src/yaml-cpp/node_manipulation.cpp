@@ -78,6 +78,10 @@ bool YAML::scalar_compare_eq<>(const YAML::Node&, const YAML::Node&) {
 }
 
 bool YAML::isSubset(const YAML::Node& source, const YAML::Node& target, bool compare_scalar) {
+	// case where scalar is disabled when compared
+	if (!compare_scalar && source.Type() == YAML::NodeType::Scalar)
+		return true;
+
 	// Validation
 	// TODO validate Tag ? Not supported in yaml-cpp ...
 	if (source.Type() != target.Type())
@@ -85,10 +89,7 @@ bool YAML::isSubset(const YAML::Node& source, const YAML::Node& target, bool com
 
 	switch (source.Type()) {
 		case YAML::NodeType::Scalar:
-			if (compare_scalar)
-				return scalar_compare_eq<bool, int, double, std::string>(source, target);
-			else
-				return true;
+			return scalar_compare_eq<bool, int, double, std::string>(source, target);
 		case YAML::NodeType::Null:
 			return true;
 		case YAML::NodeType::Undefined:
@@ -105,10 +106,10 @@ bool YAML::isSubset(const YAML::Node& source, const YAML::Node& target, bool com
 		for (YAML::const_iterator it1 = source.begin(), it2; it1 != source.end() && result == true; ++it1) {
 			const auto& key = it1->first.as<std::string>();
 
-			if (target[key])
-				result = isSubset(it1->second, target[key]);
-			else
+			if (!target[key])
 				return false;
+
+			result = isSubset(it1->second, target[key], compare_scalar);
 		}
 		return result;
 	}
@@ -118,11 +119,12 @@ bool YAML::isSubset(const YAML::Node& source, const YAML::Node& target, bool com
 		bool result = true;
 		for (YAML::const_iterator it1 = source.begin(), it2 = target.begin(); it1 != source.end() && result == true;
 		     ++it1, ++it2) {
-			result = isSubset(*it1, *it2);
+			result = isSubset(*it1, *it2, compare_scalar);
 		}
 		return result;
 	}
 
+	// should not end up here
 	return true;
 }
 
