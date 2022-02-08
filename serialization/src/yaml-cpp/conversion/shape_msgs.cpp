@@ -1,6 +1,6 @@
 #include <moveit_serialization/yaml-cpp/conversion/shape_msgs.h>
-
 #include <moveit_serialization/yaml-cpp/conversion/geometry_msgs.h>
+#include <moveit_serialization/yaml-cpp/conversion/utilities.h>
 
 #include <Eigen/Geometry>
 
@@ -8,7 +8,7 @@ namespace YAML {
 
 Node convert<shape_msgs::SolidPrimitive>::encode(const shape_msgs::SolidPrimitive& rhs) {
 	Node node;
-	node["type"] = rhs.type;
+	encodeToUINT8(node, "type", rhs.type);
 
 	node["dimensions"] = rhs.dimensions;
 	node.SetStyle(EmitterStyle::Flow);
@@ -18,7 +18,7 @@ Node convert<shape_msgs::SolidPrimitive>::encode(const shape_msgs::SolidPrimitiv
 bool convert<shape_msgs::SolidPrimitive>::decode(const Node& node, shape_msgs::SolidPrimitive& rhs) {
 	rhs = shape_msgs::SolidPrimitive();
 	if (node["type"])
-		rhs.type = node["type"].as<uint8_t>();
+		decodeToUINT8(node, "type", rhs.type);
 
 	if (node["dimensions"])
 		rhs.dimensions = node["dimensions"].as<std::vector<double>>();

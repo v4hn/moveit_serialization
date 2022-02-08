@@ -50,6 +50,15 @@ Node toNode(const T& t) {
 	return node;
 }
 
+// WARNING
+// Do not convert directly to/from uint8_t directly because
+// yaml-cpp library converts them to un/signed char.
+//
+// See https://github.com/jbeder/yaml-cpp/issues/1081
+// See https://www.boost.org/doc/libs/1_40_0/libs/conversion/lexical_cast.htm#faq
+void encodeToUINT8(YAML::Node& n, const std::string& key, const uint8_t& data);
+void decodeToUINT8(const YAML::Node& n, const std::string& key, uint8_t& data);
+
 std::string boolToString(bool b);
 bool nodeToBool(const YAML::Node& n);
 

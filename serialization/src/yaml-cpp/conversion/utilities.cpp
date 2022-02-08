@@ -11,6 +11,16 @@
 
 namespace YAML {
 
+// Many ROS msgs uses the primitive type uint8 which translate to uint8_t in c++. The
+// yaml-cpp library converts them to un/signed char which. HACK encode/decode as uint16_t.
+void encodeToUINT8(YAML::Node& n, const std::string& key, const uint8_t& data) {
+	n[key] = static_cast<uint16_t>(data);
+}
+
+void decodeToUINT8(const YAML::Node& n, const std::string& key, uint8_t& data) {
+	data = n[key].as<uint16_t>();
+}
+
 std::string boolToString(bool b) {
 	return b ? "true" : "false";
 }

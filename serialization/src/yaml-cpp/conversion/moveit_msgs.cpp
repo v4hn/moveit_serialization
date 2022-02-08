@@ -533,7 +533,7 @@ Node convert<moveit_msgs::OrientationConstraint>::encode(const moveit_msgs::Orie
 	node["absolute_y_axis_tolerance"] = rhs.absolute_y_axis_tolerance;
 	node["absolute_z_axis_tolerance"] = rhs.absolute_z_axis_tolerance;
 
-	node["parameterization"] = rhs.parameterization;
+	encodeToUINT8(node, "parameterization", rhs.parameterization);
 
 	// if (rhs.weight < 1)
 	node["weight"] = rhs.weight;
@@ -555,7 +555,7 @@ bool convert<moveit_msgs::OrientationConstraint>::decode(const Node& node, movei
 	rhs.absolute_z_axis_tolerance = node["absolute_z_axis_tolerance"].as<double>();
 
 	if (node["parameterization"])
-		rhs.parameterization = node["parameterization"].as<uint8_t>();
+		decodeToUINT8(node, "parameterization", rhs.parameterization);
 	else
 		rhs.parameterization = rhs.XYZ_EULER_ANGLES;
 
