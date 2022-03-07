@@ -33,19 +33,22 @@
  *********************************************************************/
 
 /* Author: Captain Yoshi
-   Desc: Wrapper including all conversion headers
+   Desc: collision_detection YAML conversion
 */
 
 #pragma once
 
-#include <moveit_serialization/yaml-cpp/conversion/ros.h>
-#include <moveit_serialization/yaml-cpp/conversion/std_msgs.h>
-#include <moveit_serialization/yaml-cpp/conversion/geometry_msgs.h>
-#include <moveit_serialization/yaml-cpp/conversion/shape_msgs.h>
-#include <moveit_serialization/yaml-cpp/conversion/sensor_msgs.h>
-#include <moveit_serialization/yaml-cpp/conversion/octomap_msgs.h>
-#include <moveit_serialization/yaml-cpp/conversion/trajectory_msgs.h>
-#include <moveit_serialization/yaml-cpp/conversion/object_recognition_msgs.h>
-#include <moveit_serialization/yaml-cpp/conversion/moveit_msgs.h>
-#include <moveit_serialization/yaml-cpp/conversion/collision_detection.h>
-#include <moveit_serialization/yaml-cpp/conversion/utilities.h>
+#include <moveit/collision_detection/collision_common.h>
+
+#include <yaml-cpp/yaml.h>  // moveit_serialisation_yamlcpp
+
+namespace YAML {
+
+template <>
+struct convert<collision_detection::CollisionRequest>
+{
+	static Node encode(const collision_detection::CollisionRequest& rhs);
+	static bool decode(const Node& node, collision_detection::CollisionRequest& rhs);
+};
+
+}  // namespace YAML

@@ -11,6 +11,7 @@
 	<depend>boost</depend>
 	<depend>eigen</depend>
 	<depend>roscpp</depend>
+	<depend>moveit_core</depend>
 	<depend>moveit_msgs</depend>
 	<depend>moveit_serialization_yamlcpp</depend>
 </package>

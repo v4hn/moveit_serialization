@@ -6,6 +6,7 @@ find_package(Eigen3 REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
 	roscpp
+	moveit_core
 	moveit_msgs
 	moveit_serialization_yamlcpp
 )
@@ -16,7 +17,8 @@ catkin_package(
 	INCLUDE_DIRS
 		include
 	CATKIN_DEPENDS
-		roscpp
+	    roscpp
+	    moveit_core
 		moveit_msgs
 	    moveit_serialization_yamlcpp
 	DEPENDS
@@ -41,6 +43,7 @@ add_library(${PROJECT_NAME}
 	src/yaml-cpp/conversion/sensor_msgs.cpp
 	src/yaml-cpp/conversion/octomap_msgs.cpp
 	src/yaml-cpp/conversion/trajectory_msgs.cpp
+	src/yaml-cpp/conversion/collision_detection.cpp
 	src/yaml-cpp/conversion/object_recognition_msgs.cpp
 	src/yaml-cpp/conversion/moveit_msgs.cpp)
 
