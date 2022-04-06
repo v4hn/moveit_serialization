@@ -66,141 +66,141 @@ namespace YAML {
 template <>
 struct convert<moveit_msgs::PlanningScene>
 {
-	static Node encode(const moveit_msgs::PlanningScene& rhs);
-	static bool decode(const Node& node, moveit_msgs::PlanningScene& rhs);
+    static Node encode(const moveit_msgs::PlanningScene& rhs);
+    static bool decode(const Node& node, moveit_msgs::PlanningScene& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::RobotState>
 {
-	static Node encode(const moveit_msgs::RobotState& rhs);
-	static bool decode(const Node& node, moveit_msgs::RobotState& rhs);
+    static Node encode(const moveit_msgs::RobotState& rhs);
+    static bool decode(const Node& node, moveit_msgs::RobotState& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::AttachedCollisionObject>
 {
-	static Node encode(const moveit_msgs::AttachedCollisionObject& rhs);
-	static bool decode(const Node& node, moveit_msgs::AttachedCollisionObject& rhs);
+    static Node encode(const moveit_msgs::AttachedCollisionObject& rhs);
+    static bool decode(const Node& node, moveit_msgs::AttachedCollisionObject& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::CollisionObject>
 {
-	static Node encode(const moveit_msgs::CollisionObject& rhs);
-	static bool decode(const Node& node, moveit_msgs::CollisionObject& rhs);
+    static Node encode(const moveit_msgs::CollisionObject& rhs);
+    static bool decode(const Node& node, moveit_msgs::CollisionObject& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::LinkPadding>
 {
-	static Node encode(const moveit_msgs::LinkPadding& rhs);
-	static bool decode(const Node& node, moveit_msgs::LinkPadding& rhs);
+    static Node encode(const moveit_msgs::LinkPadding& rhs);
+    static bool decode(const Node& node, moveit_msgs::LinkPadding& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::LinkScale>
 {
-	static Node encode(const moveit_msgs::LinkScale& rhs);
-	static bool decode(const Node& node, moveit_msgs::LinkScale& rhs);
+    static Node encode(const moveit_msgs::LinkScale& rhs);
+    static bool decode(const Node& node, moveit_msgs::LinkScale& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::AllowedCollisionMatrix>
 {
-	static Node encode(const moveit_msgs::AllowedCollisionMatrix& rhs);
-	static bool decode(const Node& node, moveit_msgs::AllowedCollisionMatrix& rhs);
+    static Node encode(const moveit_msgs::AllowedCollisionMatrix& rhs);
+    static bool decode(const Node& node, moveit_msgs::AllowedCollisionMatrix& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::AllowedCollisionEntry>
 {
-	static Node encode(const moveit_msgs::AllowedCollisionEntry& rhs);
-	static bool decode(const Node& node, moveit_msgs::AllowedCollisionEntry& rhs);
+    static Node encode(const moveit_msgs::AllowedCollisionEntry& rhs);
+    static bool decode(const Node& node, moveit_msgs::AllowedCollisionEntry& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::PlanningSceneWorld>
 {
-	static Node encode(const moveit_msgs::PlanningSceneWorld& rhs);
-	static bool decode(const Node& node, moveit_msgs::PlanningSceneWorld& rhs);
+    static Node encode(const moveit_msgs::PlanningSceneWorld& rhs);
+    static bool decode(const Node& node, moveit_msgs::PlanningSceneWorld& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::ObjectColor>
 {
-	static Node encode(const moveit_msgs::ObjectColor& rhs);
-	static bool decode(const Node& node, moveit_msgs::ObjectColor& rhs);
+    static Node encode(const moveit_msgs::ObjectColor& rhs);
+    static bool decode(const Node& node, moveit_msgs::ObjectColor& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::WorkspaceParameters>
 {
-	static Node encode(const moveit_msgs::WorkspaceParameters& rhs);
-	static bool decode(const Node& node, moveit_msgs::WorkspaceParameters& rhs);
+    static Node encode(const moveit_msgs::WorkspaceParameters& rhs);
+    static bool decode(const Node& node, moveit_msgs::WorkspaceParameters& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::Constraints>
 {
-	static Node encode(const moveit_msgs::Constraints& rhs);
-	static bool decode(const Node& node, moveit_msgs::Constraints& rhs);
+    static Node encode(const moveit_msgs::Constraints& rhs);
+    static bool decode(const Node& node, moveit_msgs::Constraints& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::JointConstraint>
 {
-	static Node encode(const moveit_msgs::JointConstraint& rhs);
-	static bool decode(const Node& node, moveit_msgs::JointConstraint& rhs);
+    static Node encode(const moveit_msgs::JointConstraint& rhs);
+    static bool decode(const Node& node, moveit_msgs::JointConstraint& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::PositionConstraint>
 {
-	static Node encode(const moveit_msgs::PositionConstraint& rhs);
-	static bool decode(const Node& node, moveit_msgs::PositionConstraint& rhs);
+    static Node encode(const moveit_msgs::PositionConstraint& rhs);
+    static bool decode(const Node& node, moveit_msgs::PositionConstraint& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::OrientationConstraint>
 {
-	static Node encode(const moveit_msgs::OrientationConstraint& rhs);
-	static bool decode(const Node& node, moveit_msgs::OrientationConstraint& rhs);
+    static Node encode(const moveit_msgs::OrientationConstraint& rhs);
+    static bool decode(const Node& node, moveit_msgs::OrientationConstraint& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::VisibilityConstraint>
 {
-	static Node encode(const moveit_msgs::VisibilityConstraint& rhs);
-	static bool decode(const Node& node, moveit_msgs::VisibilityConstraint& rhs);
+    static Node encode(const moveit_msgs::VisibilityConstraint& rhs);
+    static bool decode(const Node& node, moveit_msgs::VisibilityConstraint& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::TrajectoryConstraints>
 {
-	static Node encode(const moveit_msgs::TrajectoryConstraints& rhs);
-	static bool decode(const Node& node, moveit_msgs::TrajectoryConstraints& rhs);
+    static Node encode(const moveit_msgs::TrajectoryConstraints& rhs);
+    static bool decode(const Node& node, moveit_msgs::TrajectoryConstraints& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::BoundingVolume>
 {
-	static Node encode(const moveit_msgs::BoundingVolume& rhs);
-	static bool decode(const Node& node, moveit_msgs::BoundingVolume& rhs);
+    static Node encode(const moveit_msgs::BoundingVolume& rhs);
+    static bool decode(const Node& node, moveit_msgs::BoundingVolume& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::MotionPlanRequest>
 {
-	static Node encode(const moveit_msgs::MotionPlanRequest& rhs);
-	static bool decode(const Node& node, moveit_msgs::MotionPlanRequest& rhs);
+    static Node encode(const moveit_msgs::MotionPlanRequest& rhs);
+    static bool decode(const Node& node, moveit_msgs::MotionPlanRequest& rhs);
 };
 
 template <>
 struct convert<moveit_msgs::RobotTrajectory>
 {
-	static Node encode(const moveit_msgs::RobotTrajectory& rhs);
-	static bool decode(const Node& node, moveit_msgs::RobotTrajectory& rhs);
+    static Node encode(const moveit_msgs::RobotTrajectory& rhs);
+    static bool decode(const Node& node, moveit_msgs::RobotTrajectory& rhs);
 };
 
 }  // namespace YAML

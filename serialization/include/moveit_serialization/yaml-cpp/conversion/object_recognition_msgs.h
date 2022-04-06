@@ -47,8 +47,8 @@ namespace YAML {
 template <>
 struct convert<object_recognition_msgs::ObjectType>
 {
-	static Node encode(const object_recognition_msgs::ObjectType& rhs);
-	static bool decode(const Node& node, object_recognition_msgs::ObjectType& rhs);
+    static Node encode(const object_recognition_msgs::ObjectType& rhs);
+    static bool decode(const Node& node, object_recognition_msgs::ObjectType& rhs);
 };
 
 }  // namespace YAML

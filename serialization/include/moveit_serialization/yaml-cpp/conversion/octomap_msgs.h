@@ -48,15 +48,15 @@ namespace YAML {
 template <>
 struct convert<octomap_msgs::Octomap>
 {
-	static Node encode(const octomap_msgs::Octomap& rhs);
-	static bool decode(const Node& node, octomap_msgs::Octomap& rhs);
+    static Node encode(const octomap_msgs::Octomap& rhs);
+    static bool decode(const Node& node, octomap_msgs::Octomap& rhs);
 };
 
 template <>
 struct convert<octomap_msgs::OctomapWithPose>
 {
-	static Node encode(const octomap_msgs::OctomapWithPose& rhs);
-	static bool decode(const Node& node, octomap_msgs::OctomapWithPose& rhs);
+    static Node encode(const octomap_msgs::OctomapWithPose& rhs);
+    static bool decode(const Node& node, octomap_msgs::OctomapWithPose& rhs);
 };
 
 }  // namespace YAML

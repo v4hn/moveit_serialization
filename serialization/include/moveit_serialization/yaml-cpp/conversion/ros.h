@@ -48,15 +48,15 @@ namespace YAML {
 template <>
 struct convert<ros::Time>
 {
-	static Node encode(const ros::Time& rhs);
-	static bool decode(const Node& node, ros::Time& rhs);
+    static Node encode(const ros::Time& rhs);
+    static bool decode(const Node& node, ros::Time& rhs);
 };
 
 template <>
 struct convert<ros::Duration>
 {
-	static Node encode(const ros::Duration& rhs);
-	static bool decode(const Node& node, ros::Duration& rhs);
+    static Node encode(const ros::Duration& rhs);
+    static bool decode(const Node& node, ros::Duration& rhs);
 };
 
 }  // namespace YAML

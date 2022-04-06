@@ -50,28 +50,28 @@ namespace YAML {
 template <>
 struct convert<trajectory_msgs::JointTrajectory>
 {
-	static Node encode(const trajectory_msgs::JointTrajectory& rhs);
-	static bool decode(const Node& node, trajectory_msgs::JointTrajectory& rhs);
+    static Node encode(const trajectory_msgs::JointTrajectory& rhs);
+    static bool decode(const Node& node, trajectory_msgs::JointTrajectory& rhs);
 };
 
 template <>
 struct convert<trajectory_msgs::JointTrajectoryPoint>
 {
-	static Node encode(const trajectory_msgs::JointTrajectoryPoint& rhs);
-	static bool decode(const Node& node, trajectory_msgs::JointTrajectoryPoint& rhs);
+    static Node encode(const trajectory_msgs::JointTrajectoryPoint& rhs);
+    static bool decode(const Node& node, trajectory_msgs::JointTrajectoryPoint& rhs);
 };
 template <>
 struct convert<trajectory_msgs::MultiDOFJointTrajectory>
 {
-	static Node encode(const trajectory_msgs::MultiDOFJointTrajectory& rhs);
-	static bool decode(const Node& node, trajectory_msgs::MultiDOFJointTrajectory& rhs);
+    static Node encode(const trajectory_msgs::MultiDOFJointTrajectory& rhs);
+    static bool decode(const Node& node, trajectory_msgs::MultiDOFJointTrajectory& rhs);
 };
 
 template <>
 struct convert<trajectory_msgs::MultiDOFJointTrajectoryPoint>
 {
-	static Node encode(const trajectory_msgs::MultiDOFJointTrajectoryPoint& rhs);
-	static bool decode(const Node& node, trajectory_msgs::MultiDOFJointTrajectoryPoint& rhs);
+    static Node encode(const trajectory_msgs::MultiDOFJointTrajectoryPoint& rhs);
+    static bool decode(const Node& node, trajectory_msgs::MultiDOFJointTrajectoryPoint& rhs);
 };
 
 }  // namespace YAML

@@ -50,29 +50,29 @@ namespace YAML {
 template <>
 struct convert<shape_msgs::SolidPrimitive>
 {
-	static Node encode(const shape_msgs::SolidPrimitive& rhs);
-	static bool decode(const Node& node, shape_msgs::SolidPrimitive& rhs);
+    static Node encode(const shape_msgs::SolidPrimitive& rhs);
+    static bool decode(const Node& node, shape_msgs::SolidPrimitive& rhs);
 };
 
 template <>
 struct convert<shape_msgs::Mesh>
 {
-	static Node encode(const shape_msgs::Mesh& rhs);
-	static bool decode(const Node& node, shape_msgs::Mesh& rhs);
+    static Node encode(const shape_msgs::Mesh& rhs);
+    static bool decode(const Node& node, shape_msgs::Mesh& rhs);
 };
 
 template <>
 struct convert<shape_msgs::MeshTriangle>
 {
-	static Node encode(const shape_msgs::MeshTriangle& rhs);
-	static bool decode(const Node& node, shape_msgs::MeshTriangle& rhs);
+    static Node encode(const shape_msgs::MeshTriangle& rhs);
+    static bool decode(const Node& node, shape_msgs::MeshTriangle& rhs);
 };
 
 template <>
 struct convert<shape_msgs::Plane>
 {
-	static Node encode(const shape_msgs::Plane& rhs);
-	static bool decode(const Node& node, shape_msgs::Plane& rhs);
+    static Node encode(const shape_msgs::Plane& rhs);
+    static bool decode(const Node& node, shape_msgs::Plane& rhs);
 };
 
 }  // namespace YAML

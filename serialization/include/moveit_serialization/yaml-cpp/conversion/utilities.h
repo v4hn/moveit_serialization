@@ -44,10 +44,11 @@ namespace YAML {
 
 /// Encode object to node
 template <typename T>
-Node toNode(const T& t) {
-	YAML::Node node;
-	node = t;
-	return node;
+Node toNode(const T& t)
+{
+    YAML::Node node;
+    node = t;
+    return node;
 }
 
 // WARNING

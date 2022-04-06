@@ -48,15 +48,15 @@ namespace YAML {
 template <>
 struct convert<std_msgs::Header>
 {
-	static Node encode(const std_msgs::Header& rhs);
-	static bool decode(const Node& node, std_msgs::Header& rhs);
+    static Node encode(const std_msgs::Header& rhs);
+    static bool decode(const Node& node, std_msgs::Header& rhs);
 };
 
 template <>
 struct convert<std_msgs::ColorRGBA>
 {
-	static Node encode(const std_msgs::ColorRGBA& rhs);
-	static bool decode(const Node& node, std_msgs::ColorRGBA& rhs);
+    static Node encode(const std_msgs::ColorRGBA& rhs);
+    static bool decode(const Node& node, std_msgs::ColorRGBA& rhs);
 };
 
 }  // namespace YAML

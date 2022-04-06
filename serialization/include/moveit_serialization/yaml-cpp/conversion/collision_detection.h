@@ -47,8 +47,8 @@ namespace YAML {
 template <>
 struct convert<collision_detection::CollisionRequest>
 {
-	static Node encode(const collision_detection::CollisionRequest& rhs);
-	static bool decode(const Node& node, collision_detection::CollisionRequest& rhs);
+    static Node encode(const collision_detection::CollisionRequest& rhs);
+    static bool decode(const Node& node, collision_detection::CollisionRequest& rhs);
 };
 
 }  // namespace YAML

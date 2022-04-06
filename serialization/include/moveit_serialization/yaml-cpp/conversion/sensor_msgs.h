@@ -48,15 +48,15 @@ namespace YAML {
 template <>
 struct convert<sensor_msgs::JointState>
 {
-	static Node encode(const sensor_msgs::JointState& rhs);
-	static bool decode(const Node& node, sensor_msgs::JointState& rhs);
+    static Node encode(const sensor_msgs::JointState& rhs);
+    static bool decode(const Node& node, sensor_msgs::JointState& rhs);
 };
 
 template <>
 struct convert<sensor_msgs::MultiDOFJointState>
 {
-	static Node encode(const sensor_msgs::MultiDOFJointState& rhs);
-	static bool decode(const Node& node, sensor_msgs::MultiDOFJointState& rhs);
+    static Node encode(const sensor_msgs::MultiDOFJointState& rhs);
+    static bool decode(const Node& node, sensor_msgs::MultiDOFJointState& rhs);
 };
 
 }  // namespace YAML

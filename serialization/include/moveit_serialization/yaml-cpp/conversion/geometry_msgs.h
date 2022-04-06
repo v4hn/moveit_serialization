@@ -55,64 +55,64 @@ namespace YAML {
 template <>
 struct convert<geometry_msgs::TransformStamped>
 {
-	static Node encode(const geometry_msgs::TransformStamped& rhs);
-	static bool decode(const Node& node, geometry_msgs::TransformStamped& rhs);
+    static Node encode(const geometry_msgs::TransformStamped& rhs);
+    static bool decode(const Node& node, geometry_msgs::TransformStamped& rhs);
 };
 
 template <>
 struct convert<geometry_msgs::Pose>
 {
-	static Node encode(const geometry_msgs::Pose& rhs);
-	static bool decode(const Node& node, geometry_msgs::Pose& rhs);
+    static Node encode(const geometry_msgs::Pose& rhs);
+    static bool decode(const Node& node, geometry_msgs::Pose& rhs);
 };
 
 template <>
 struct convert<geometry_msgs::PoseStamped>
 {
-	static Node encode(const geometry_msgs::PoseStamped& rhs);
-	static bool decode(const Node& node, geometry_msgs::PoseStamped& rhs);
+    static Node encode(const geometry_msgs::PoseStamped& rhs);
+    static bool decode(const Node& node, geometry_msgs::PoseStamped& rhs);
 };
 
 template <>
 struct convert<geometry_msgs::Transform>
 {
-	static Node encode(const geometry_msgs::Transform& rhs);
-	static bool decode(const Node& node, geometry_msgs::Transform& rhs);
+    static Node encode(const geometry_msgs::Transform& rhs);
+    static bool decode(const Node& node, geometry_msgs::Transform& rhs);
 };
 
 template <>
 struct convert<geometry_msgs::Vector3>
 {
-	static Node encode(const geometry_msgs::Vector3& rhs);
-	static bool decode(const Node& node, geometry_msgs::Vector3& rhs);
+    static Node encode(const geometry_msgs::Vector3& rhs);
+    static bool decode(const Node& node, geometry_msgs::Vector3& rhs);
 };
 
 template <>
 struct convert<geometry_msgs::Point>
 {
-	static Node encode(const geometry_msgs::Point& rhs);
-	static bool decode(const Node& node, geometry_msgs::Point& rhs);
+    static Node encode(const geometry_msgs::Point& rhs);
+    static bool decode(const Node& node, geometry_msgs::Point& rhs);
 };
 
 template <>
 struct convert<geometry_msgs::Quaternion>
 {
-	static Node encode(const geometry_msgs::Quaternion& rhs);
-	static bool decode(const Node& node, geometry_msgs::Quaternion& rhs);
+    static Node encode(const geometry_msgs::Quaternion& rhs);
+    static bool decode(const Node& node, geometry_msgs::Quaternion& rhs);
 };
 
 template <>
 struct convert<geometry_msgs::Twist>
 {
-	static Node encode(const geometry_msgs::Twist& rhs);
-	static bool decode(const Node& node, geometry_msgs::Twist& rhs);
+    static Node encode(const geometry_msgs::Twist& rhs);
+    static bool decode(const Node& node, geometry_msgs::Twist& rhs);
 };
 
 template <>
 struct convert<geometry_msgs::Wrench>
 {
-	static Node encode(const geometry_msgs::Wrench& rhs);
-	static bool decode(const Node& node, geometry_msgs::Wrench& rhs);
+    static Node encode(const geometry_msgs::Wrench& rhs);
+    static bool decode(const Node& node, geometry_msgs::Wrench& rhs);
 };
 
 }  // namespace YAML

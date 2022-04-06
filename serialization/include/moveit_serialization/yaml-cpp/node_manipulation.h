@@ -105,12 +105,14 @@ class_overrides clone(class_overrides const& by_class);
  * c++14 equivalent of 'if constexpr' (c++17)
  */
 template <class Integral, Integral N>
-auto dispatch(std::integral_constant<Integral, N>) {
-	return [](auto&&... args) { return std::get<N>(std::forward_as_tuple(decltype(args)(args)...)); };
+auto dispatch(std::integral_constant<Integral, N>)
+{
+    return [](auto&&... args) { return std::get<N>(std::forward_as_tuple(decltype(args)(args)...)); };
 }
 template <std::size_t N>
-auto dispatch() {
-	return dispatch(std::integral_constant<std::size_t, N>{});
+auto dispatch()
+{
+    return dispatch(std::integral_constant<std::size_t, N>{});
 }
 
 /**
@@ -121,84 +123,110 @@ auto dispatch() {
 template <typename... Ts>
 struct scalar_compare
 {
-	bool equality(const Node& source, const Node& target) { return _impl_equality<0>(source, target); }
+    bool equality(const Node& source, const Node& target)
+    {
+        return _impl_equality<0>(source, target);
+    }
 
-	bool non_equality(const Node& source, const Node& target) { return !_impl_equality<0>(source, target); }
+    bool non_equality(const Node& source, const Node& target)
+    {
+        return !_impl_equality<0>(source, target);
+    }
 
-	bool lower_then(const Node& source, const Node& target) { return _impl_lower_then<0>(source, target); }
+    bool lower_then(const Node& source, const Node& target)
+    {
+        return _impl_lower_then<0>(source, target);
+    }
 
-	bool greater_then(const Node& source, const Node& target) { return _impl_greater_then<0>(source, target); }
+    bool greater_then(const Node& source, const Node& target)
+    {
+        return _impl_greater_then<0>(source, target);
+    }
 
-	bool lower_equal(const Node& source, const Node& target) { return !_impl_greater_then<0>(source, target); }
+    bool lower_equal(const Node& source, const Node& target)
+    {
+        return !_impl_greater_then<0>(source, target);
+    }
 
-	bool greater_equal(const Node& source, const Node& target) { return !_impl_lower_then<0>(source, target); }
+    bool greater_equal(const Node& source, const Node& target)
+    {
+        return !_impl_lower_then<0>(source, target);
+    }
 
 private:
-	using TypeTuple = std::tuple<Ts...>;
-	constexpr static std::size_t TUPLE_SIZE = std::tuple_size<TypeTuple>::value;
+    using TypeTuple = std::tuple<Ts...>;
+    constexpr static std::size_t TUPLE_SIZE = std::tuple_size<TypeTuple>::value;
 
-	template <std::size_t N>
-	bool _impl_equality(const Node& source, const Node& target) {
-		return dispatch(std::integral_constant<bool, N == TUPLE_SIZE>{})(
-		    // 0, aka false branch:
-		    [&](auto Nval) {
-			    using SelectedType = std::tuple_element_t<Nval, TypeTuple>;
+    template <std::size_t N>
+    bool _impl_equality(const Node& source, const Node& target)
+    {
+        return dispatch(std::integral_constant<bool, N == TUPLE_SIZE>{})(
+            // 0, aka false branch:
+            [&](auto Nval) {
+                using SelectedType = std::tuple_element_t<Nval, TypeTuple>;
 
-			    try {
-				    return source.as<SelectedType>() == target.as<SelectedType>();
-			    } catch (TypedBadConversion<SelectedType>& e) {
-				    return _impl_equality<Nval + 1>(source, target);
-			    }
-		    },
-		    // 1, aka true branch:
-		    [](auto&&) { return false; })(std::integral_constant<std::size_t, N>{});
-	}
+                try {
+                    return source.as<SelectedType>() == target.as<SelectedType>();
+                }
+                catch (TypedBadConversion<SelectedType>& e) {
+                    return _impl_equality<Nval + 1>(source, target);
+                }
+            },
+            // 1, aka true branch:
+            [](auto&&) { return false; })(std::integral_constant<std::size_t, N>{});
+    }
 
-	template <std::size_t N>
-	bool _impl_greater_then(const Node& source, const Node& target) {
-		return dispatch(std::integral_constant<bool, N == TUPLE_SIZE>{})(
-		    // 0, aka false branch:
-		    [&](auto Nval) {
-			    using SelectedType = std::tuple_element_t<Nval, TypeTuple>;
+    template <std::size_t N>
+    bool _impl_greater_then(const Node& source, const Node& target)
+    {
+        return dispatch(std::integral_constant<bool, N == TUPLE_SIZE>{})(
+            // 0, aka false branch:
+            [&](auto Nval) {
+                using SelectedType = std::tuple_element_t<Nval, TypeTuple>;
 
-			    try {
-				    return source.as<SelectedType>() > target.as<SelectedType>();
-			    } catch (TypedBadConversion<SelectedType>& e) {
-				    return _impl_greater_then<Nval + 1>(source, target);
-			    }
-		    },
-		    // 1, aka true branch:
-		    [](auto&&) { return false; })(std::integral_constant<std::size_t, N>{});
-	}
+                try {
+                    return source.as<SelectedType>() > target.as<SelectedType>();
+                }
+                catch (TypedBadConversion<SelectedType>& e) {
+                    return _impl_greater_then<Nval + 1>(source, target);
+                }
+            },
+            // 1, aka true branch:
+            [](auto&&) { return false; })(std::integral_constant<std::size_t, N>{});
+    }
 
-	template <std::size_t N>
-	bool _impl_lower_then(const Node& source, const Node& target) {
-		return dispatch(std::integral_constant<bool, N == TUPLE_SIZE>{})(
-		    // 0, aka false branch:
-		    [&](auto Nval) {
-			    using SelectedType = std::tuple_element_t<Nval, TypeTuple>;
+    template <std::size_t N>
+    bool _impl_lower_then(const Node& source, const Node& target)
+    {
+        return dispatch(std::integral_constant<bool, N == TUPLE_SIZE>{})(
+            // 0, aka false branch:
+            [&](auto Nval) {
+                using SelectedType = std::tuple_element_t<Nval, TypeTuple>;
 
-			    try {
-				    return source.as<SelectedType>() < target.as<SelectedType>();
-			    } catch (TypedBadConversion<SelectedType>& e) {
-				    return _impl_lower_then<Nval + 1>(source, target);
-			    }
-		    },
-		    // 1, aka true branch:
-		    [](auto&&) { return false; })(std::integral_constant<std::size_t, N>{});
-	}
+                try {
+                    return source.as<SelectedType>() < target.as<SelectedType>();
+                }
+                catch (TypedBadConversion<SelectedType>& e) {
+                    return _impl_lower_then<Nval + 1>(source, target);
+                }
+            },
+            // 1, aka true branch:
+            [](auto&&) { return false; })(std::integral_constant<std::size_t, N>{});
+    }
 };
 
 template <class... Args>
 bool scalar_compare_eq(const Node& source, const Node& target);
 
 template <class T, class... Args>
-bool helper_compare_eq(const Node& source, const Node& target) {
-	try {
-		return source.as<T>() == target.as<T>();
-	} catch (TypedBadConversion<T>& e) {
-		return scalar_compare_eq<Args...>(source, target);
-	}
+bool helper_compare_eq(const Node& source, const Node& target)
+{
+    try {
+        return source.as<T>() == target.as<T>();
+    }
+    catch (TypedBadConversion<T>& e) {
+        return scalar_compare_eq<Args...>(source, target);
+    }
 }
 
 /**

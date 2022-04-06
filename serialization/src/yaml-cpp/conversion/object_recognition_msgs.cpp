@@ -2,23 +2,25 @@
 
 namespace YAML {
 
-Node convert<object_recognition_msgs::ObjectType>::encode(const object_recognition_msgs::ObjectType& rhs) {
-	Node node;
-	node["key"] = rhs.key;
-	node["db"] = rhs.db;
-	return node;
+Node convert<object_recognition_msgs::ObjectType>::encode(const object_recognition_msgs::ObjectType& rhs)
+{
+    Node node;
+    node["key"] = rhs.key;
+    node["db"] = rhs.db;
+    return node;
 }
 
-bool convert<object_recognition_msgs::ObjectType>::decode(const Node& node, object_recognition_msgs::ObjectType& rhs) {
-	rhs = object_recognition_msgs::ObjectType();
+bool convert<object_recognition_msgs::ObjectType>::decode(const Node& node, object_recognition_msgs::ObjectType& rhs)
+{
+    rhs = object_recognition_msgs::ObjectType();
 
-	if (node["key"])
-		rhs.key = node["key"].as<std::string>();
+    if (node["key"])
+        rhs.key = node["key"].as<std::string>();
 
-	if (node["db"])
-		rhs.db = node["db"].as<std::string>();
+    if (node["db"])
+        rhs.db = node["db"].as<std::string>();
 
-	return true;
+    return true;
 }
 
 }  // namespace YAML
