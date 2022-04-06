@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
 	moveit_core
 	moveit_msgs
 	moveit_serialization_yamlcpp
+	ryml
 )
 
 catkin_package(
@@ -21,6 +22,7 @@ catkin_package(
 	    moveit_core
 		moveit_msgs
 	    moveit_serialization_yamlcpp
+		ryml
 	DEPENDS
 	    Boost
 		EIGEN3
