@@ -49,6 +49,9 @@ add_library(${PROJECT_NAME}
 	src/yaml-cpp/conversion/object_recognition_msgs.cpp
 	src/yaml-cpp/conversion/moveit_msgs.cpp
 
+
+    src/ryml/error_handler.cpp
+
 	# ros
 	src/ryml/ros/duration.cpp
 	src/ryml/ros/time.cpp
