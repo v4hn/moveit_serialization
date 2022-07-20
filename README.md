@@ -1,11 +1,18 @@
 # MoveIt Serialization
 
-Serializer for moveit_msgs. Currently supports yaml serialization through yaml-cpp.
+Serializer for moveit_msgs. Currently supports yaml serialization through yaml-cpp and rapidyaml.
 
 
 ## Roadmap
 - Add binary serealizer for ros_msgs
-- Change yaml-cpp to rapid-yaml [*EPIC*]
+- Deprecate yaml-cpp in favor of rapidyaml
+
+## rapidyaml
+**Alpha State**
+One of the fastest yaml parser and emiter available.
+
+ROS Dependency: https://github.com/captain-yoshi/ryml
+
 
 ## yaml-cpp
 
@@ -17,4 +24,4 @@ RViz depends on the `yaml-cpp` library. The [MoveIt Benchmark Suite](https://git
 
 ## Contribution
 
-The yaml conversion for decoding/encoding moveit_msgs was done by Zachary Kingston and taken from the [robowflex](https://github.com/KavrakiLab/robowflex) project.
+The yaml-cpp conversion for decoding/encoding moveit_msgs was done by Zachary Kingston and taken from the [robowflex](https://github.com/KavrakiLab/robowflex) project.
