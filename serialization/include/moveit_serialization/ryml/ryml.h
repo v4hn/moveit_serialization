@@ -38,9 +38,6 @@
 
 #pragma once
 
-// std (map, vector, string)
-#include <moveit_serialization/ryml/std.h>
-
 // ros
 #include <moveit_serialization/ryml/ros/duration.h>
 #include <moveit_serialization/ryml/ros/time.h>
@@ -114,12 +111,15 @@
 #include <moveit_serialization/ryml/moveit/collision_detection/collision_request.h>
 
 // formatters
-#include <moveit_serialization/ryml/format.h>
+//#include <moveit_serialization/ryml/format.h>
+// std (map, vector, string)
+#include <moveit_serialization/ryml/std.h>
 
 // WARNING: Do NOT include headers below this line
 // Please take note of the following pitfall when using serialization
 // functions: you have to include the header with the serialization
 // before any other headers that use functions from it.
-#include <moveit_serialization/ryml/error_handler.h>  // includes ryml.hpp in the header
 
 #include <ryml.hpp>
+
+#include <moveit_serialization/ryml/error_handler.h>  // includes ryml.hpp in the header

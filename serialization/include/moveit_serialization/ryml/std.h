@@ -38,8 +38,8 @@
 
 #pragma once
 
-#include <c4/yml/std/std.hpp>
 #include <moveit_serialization/ryml/format.h>
+#include <c4/yml/std/std.hpp>
 
 namespace c4 {
 namespace yml {
