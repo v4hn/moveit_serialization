@@ -9,12 +9,12 @@ find_package(catkin REQUIRED COMPONENTS
 	moveit_core
 	moveit_msgs
 	moveit_serialization_yamlcpp
-	ryml
 )
 
 catkin_package(
 	LIBRARIES
     	${PROJECT_NAME}
+        ryml
 	INCLUDE_DIRS
 		include
 	CATKIN_DEPENDS
@@ -22,18 +22,24 @@ catkin_package(
 	    moveit_core
 		moveit_msgs
 	    moveit_serialization_yamlcpp
-		ryml
 	DEPENDS
 	    Boost
 		EIGEN3
 )
+
+# add rapidyaml library
+# https://github.com/biojppm/rapidyaml/commit/ff5493188293eab30f1294241461abebe29e56fa
+add_subdirectory(ext/ryml ryml)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include
 	${Boost_INCLUDE_DIRS}
 	${EIGEN3_INCLUDE_DIRS}
-	${catkin_INCLUDE_DIRS})
+	${catkin_INCLUDE_DIRS}
+)
+
+
 
 add_library(${PROJECT_NAME}
 	src/yaml-cpp/node_manipulation.cpp
@@ -48,9 +54,6 @@ add_library(${PROJECT_NAME}
 	src/yaml-cpp/conversion/collision_detection.cpp
 	src/yaml-cpp/conversion/object_recognition_msgs.cpp
 	src/yaml-cpp/conversion/moveit_msgs.cpp
-
-
-    src/ryml/error_handler.cpp
 
 	# ros
 	src/ryml/ros/duration.cpp
@@ -123,15 +126,24 @@ add_library(${PROJECT_NAME}
 
 	# moveit
 	src/ryml/moveit/collision_detection/collision_request.cpp
-	)
+
+    src/ryml/error_handler.cpp
+)
+
+
+
+
 
 add_executable(run_example src/example.cpp)
-target_link_libraries(run_example ${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(run_example ${PROJECT_NAME} ryml::ryml ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
-install(DIRECTORY include/
-	DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION})
+add_executable(ryml-quickstart ext/ryml/samples/quickstart.cpp)
+target_link_libraries(ryml-quickstart ${catkin_LIBRARIES} ryml::ryml)
 
-install(TARGETS run_example ${PROJECT_NAME}
-	LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+install(TARGETS
+    ${PROJECT_NAME}
+    run_example
+    ryml-quickstart
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
