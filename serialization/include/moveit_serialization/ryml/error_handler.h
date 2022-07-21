@@ -39,8 +39,6 @@
 #pragma once
 
 #include <stdexcept>
-#include <c4/format.hpp>
-#include <ryml.hpp>
 
 namespace moveit_serialization {
 
@@ -52,28 +50,6 @@ public:
     explicit yaml_error(const char* what_arg) : runtime_error(what_arg){};
 };
 
-struct ErrorHandler
-{
-    // this will be called on error
-    void on_error(const char* msg, size_t len, ryml::Location loc)
-    {
-        throw yaml_error(ryml::formatrs<std::string>("{}:{}:{} ({}B): ERROR: {}", loc.name, loc.line, loc.col,
-                                                     loc.offset, ryml::csubstr(msg, len)));
-    }
-
-    // bridge
-    ryml::Callbacks callbacks()
-    {
-        return ryml::Callbacks(this, nullptr, nullptr, ErrorHandler::s_error);
-    }
-    static void s_error(const char* msg, size_t len, ryml::Location loc, void* this_)
-    {
-        return ((ErrorHandler*)this_)->on_error(msg, len, loc);
-    }
-
-    ErrorHandler() : defaults(ryml::get_callbacks())
-    {}
-    ryml::Callbacks defaults;
-};
+// Error handler is started in the implementation
 
 }  // namespace moveit_serialization
