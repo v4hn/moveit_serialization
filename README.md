@@ -8,10 +8,8 @@ Serializer for moveit_msgs. Currently supports yaml serialization through yaml-c
 - Deprecate yaml-cpp in favor of rapidyaml
 
 ## rapidyaml
-**Alpha State**
-One of the fastest yaml parser and emiter available.
-
-ROS Dependency: https://github.com/captain-yoshi/ryml
+**[BETA]** One of the fastest yaml parser and emiter available. Built internally to avoid unwanted changes to the global error handler.<br>
+Current version: https://github.com/biojppm/rapidyaml/commit/ff5493188293eab30f1294241461abebe29e56fa
 
 
 ## yaml-cpp
