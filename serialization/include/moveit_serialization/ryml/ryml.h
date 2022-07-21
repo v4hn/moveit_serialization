@@ -42,6 +42,9 @@
 #include <moveit_serialization/ryml/ros/duration.h>
 #include <moveit_serialization/ryml/ros/time.h>
 
+// xmlrpc
+#include <moveit_serialization/ryml/xmlrpc/xmlrpc.h>
+
 // std_msgs
 #include <moveit_serialization/ryml/std_msgs/color_rgba.h>
 #include <moveit_serialization/ryml/std_msgs/header.h>

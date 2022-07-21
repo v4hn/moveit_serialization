@@ -59,6 +59,9 @@ add_library(${PROJECT_NAME}
 	src/ryml/ros/duration.cpp
 	src/ryml/ros/time.cpp
 
+    # xmlrpc
+    src/ryml/xmlrpc/xmlrpc.cpp
+
 	# std_msgs
 	src/ryml/std_msgs/color_rgba.cpp
 	src/ryml/std_msgs/header.cpp
