@@ -1,6 +1,7 @@
 #include <c4/yml/common.hpp>
 
 #include <moveit_serialization/ryml/format.h>
+#include <moveit_serialization/ryml/std.h>
 #include <moveit_serialization/ryml/error_handler.h>
 
 namespace {
