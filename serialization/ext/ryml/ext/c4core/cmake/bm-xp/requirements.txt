@@ -8,3 +8,7 @@ markupsafe
 Frozen-Flask
 requests
 mmh3
+bokeh
+selenium
+matplotlib
+prettytable

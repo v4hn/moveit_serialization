@@ -21,6 +21,6 @@ cmake --build ./build/$cfg/ryml-build --config $cfg --target install
 # now build and run the sample
 #-----------------------------
 # configure the sample
-#cmake -S . -B ./build/$cfg "-DCMAKE_PREFIX_PATH=$RYML_DIR" -DCMAKE_BUILD_TYPE=$cfg
+cmake -S . -B ./build/$cfg "-DCMAKE_PREFIX_PATH=$RYML_DIR" -DCMAKE_BUILD_TYPE=$cfg
 # build and run the sample
-#cmake --build ./build/$cfg --config $cfg --target run
+cmake --build ./build/$cfg --config $cfg --target run

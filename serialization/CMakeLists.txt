@@ -30,7 +30,7 @@ catkin_package(
 )
 
 # add rapidyaml library
-# https://github.com/biojppm/rapidyaml/commit/ff5493188293eab30f1294241461abebe29e56fa
+# https://github.com/biojppm/rapidyaml/commit/d44a9b9d5f16f3ca078cea887d4d01441c234724
 add_subdirectory(ext/ryml ryml)
 
 set(CMAKE_CXX_STANDARD 14)
