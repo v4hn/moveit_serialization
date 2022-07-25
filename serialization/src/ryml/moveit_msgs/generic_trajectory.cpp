@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/std_msgs/header.h>
 #include <moveit_serialization/ryml/trajectory_msgs/joint_trajectory.h>
 #include <moveit_serialization/ryml/moveit_msgs/cartesian_trajectory.h>

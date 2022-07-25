@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/geometry_msgs/pose.h>
 #include <moveit_serialization/ryml/shape_msgs/solid_primitive.h>
 #include <moveit_serialization/ryml/shape_msgs/mesh.h>

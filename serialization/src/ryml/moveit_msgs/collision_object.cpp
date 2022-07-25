@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/std_msgs/header.h>
 #include <moveit_serialization/ryml/object_recognition_msgs/object_type.h>
 #include <moveit_serialization/ryml/geometry_msgs/pose.h>

@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/ros/duration.h>
 
 #include <moveit_serialization/ryml/trajectory_msgs/joint_trajectory_point.h>

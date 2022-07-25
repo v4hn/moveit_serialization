@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/shape_msgs/solid_primitive.h>
 
 namespace c4 {

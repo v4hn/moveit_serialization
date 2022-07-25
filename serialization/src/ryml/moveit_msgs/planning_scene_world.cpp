@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/octomap_msgs/octomap_with_pose.h>
 #include <moveit_serialization/ryml/moveit_msgs/collision_object.h>
 

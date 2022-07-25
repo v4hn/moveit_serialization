@@ -1,5 +1,5 @@
 #include <moveit_serialization/ryml/format.h>
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/std_msgs/header.h>
 
 #include <moveit_serialization/ryml/octomap_msgs/octomap.h>

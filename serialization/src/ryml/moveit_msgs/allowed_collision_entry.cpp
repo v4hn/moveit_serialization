@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 
 #include <moveit_serialization/ryml/moveit_msgs/allowed_collision_entry.h>
 

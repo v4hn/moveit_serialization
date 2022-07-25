@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/std_msgs/color_rgba.h>
 
 #include <moveit_serialization/ryml/moveit_msgs/object_color.h>

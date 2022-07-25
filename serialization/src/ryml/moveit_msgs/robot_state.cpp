@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/sensor_msgs/joint_state.h>
 #include <moveit_serialization/ryml/sensor_msgs/multidof_joint_state.h>
 #include <moveit_serialization/ryml/moveit_msgs/attached_collision_object.h>

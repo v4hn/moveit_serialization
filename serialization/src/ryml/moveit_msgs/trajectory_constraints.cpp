@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/moveit_msgs/constraints.h>
 
 #include <moveit_serialization/ryml/moveit_msgs/trajectory_constraints.h>

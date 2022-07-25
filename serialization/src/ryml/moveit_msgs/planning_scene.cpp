@@ -1,4 +1,4 @@
-#include <moveit_serialization/ryml/std.h>
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/geometry_msgs/transform_stamped.h>
 #include <moveit_serialization/ryml/moveit_msgs/robot_state.h>
 #include <moveit_serialization/ryml/moveit_msgs/allowed_collision_matrix.h>
