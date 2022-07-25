@@ -38,11 +38,36 @@
 
 #pragma once
 
-#include <moveit_serialization/ryml/format.h>
+#include <c4/yml/node.hpp>
+
 #include <c4/yml/std/std.hpp>
+#include <moveit_serialization/ryml/format.h>
+
+#include <utility>
 
 namespace c4 {
 namespace yml {
+
+// std::pair
+template <class K, class V>
+void write(c4::yml::NodeRef* n, std::pair<K, V> const& pair)
+{
+    *n |= c4::yml::SEQ;
+    n->append_child() << pair.first;
+    n->append_child() << pair.second;
+}
+
+template <class K, class V>
+bool read(c4::yml::NodeRef const& n, std::pair<K, V>* pair)
+{
+    if (!n.is_seq() || n.num_children() != 2)
+        return false;
+
+    n[0] >> pair->first;
+    n[1] >> pair->second;
+
+    return true;
+}
 
 // specialize vector of floats
 template <class Alloc>
