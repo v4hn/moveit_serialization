@@ -134,6 +134,7 @@ add_library(${PROJECT_NAME}
 	# moveit
 	src/ryml/moveit/collision_detection/collision_request.cpp
 
+    src/ryml/utils.cpp
     src/ryml/error_handler.cpp
 )
 

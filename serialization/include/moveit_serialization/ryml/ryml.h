@@ -39,6 +39,7 @@
 #pragma once
 
 #include <moveit_serialization/ryml/conversions.h>
+#include <moveit_serialization/ryml/utils.h>
 
 // WARNING: Do NOT include headers below this line
 // Please take note of the following pitfall when using serialization
