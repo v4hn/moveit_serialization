@@ -17,6 +17,8 @@ catkin_package(
         ryml
 	INCLUDE_DIRS
 		include
+        ext/ryml/src
+        ext/ryml/ext/c4core/src
 	CATKIN_DEPENDS
 	    roscpp
 	    moveit_core
@@ -37,6 +39,8 @@ include_directories(include
 	${Boost_INCLUDE_DIRS}
 	${EIGEN3_INCLUDE_DIRS}
 	${catkin_INCLUDE_DIRS}
+    ext/ryml/src
+    ext/ryml/ext/c4core/src
 )
 
 
