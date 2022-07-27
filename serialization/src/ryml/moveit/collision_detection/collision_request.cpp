@@ -40,7 +40,8 @@ bool read(c4::yml::NodeRef const& n, collision_detection::CollisionRequest* rhs)
     n["max_contacts_per_pair"] >> rhs->max_contacts_per_pair;
     n["max_cost_sources"] >> rhs->max_cost_sources;
     n["verbose"] >> rhs->verbose;
-    n["group_name"] >> rhs->group_name;
+    if (n.has_child("group_name"))
+        n["group_name"] >> rhs->group_name;
 
     return true;
 }
