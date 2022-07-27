@@ -19,10 +19,9 @@ void write(c4::yml::NodeRef* n, moveit_msgs::JointConstraint const& rhs)
 
 bool read(c4::yml::NodeRef const& n, moveit_msgs::JointConstraint* rhs)
 {
-    if (n.has_child("joint_name"))
-        n["joint_name"] >> rhs->joint_name;
-    if (n.has_child("position"))
-        n["position"] >> rhs->position;
+    n["joint_name"] >> rhs->joint_name;
+    n["position"] >> rhs->position;
+
     if (n.has_child("tolerance_above"))
         n["tolerance_above"] >> rhs->tolerance_above;
     if (n.has_child("tolerance_below"))
