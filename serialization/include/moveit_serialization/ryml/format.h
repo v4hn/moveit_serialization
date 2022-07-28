@@ -43,8 +43,6 @@
 namespace c4 {
 namespace yml {
 
-constexpr int GLOBAL_FLOAT_PRECISION = -1;
-
 // Create new float type
 template <class T>
 struct floattype
@@ -72,7 +70,11 @@ inline auto freal(const double& d)
 template <class T>
 inline std::size_t to_chars(substr buf, floattype<T> fmt)
 {
-    return c4::ftoa(buf, fmt.val, GLOBAL_FLOAT_PRECISION, FTOA_FLOAT /*pick the proper format*/);
+    // The value of std::numeric_limits<T>::max_digits10 is the number
+    // of base-10 digits that are necessary to uniquely represent all
+    // distinct values of the type T.
+
+    return c4::ftoa(buf, fmt.val, std::numeric_limits<T>::max_digits10, FTOA_FLEX /*pick the proper format*/);
 }
 
 }  // namespace yml
