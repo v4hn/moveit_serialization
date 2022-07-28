@@ -8,7 +8,7 @@ void write(c4::yml::NodeRef* n, shape_msgs::Plane const& rhs)
 {
     *n |= c4::yml::MAP;
 
-    n->append_child({ yml::KEYSEQ, "coef" });
+    n->append_child({ yml::KEYSEQ, "coef" }) |= yml::_WIP_STYLE_FLOW_SL;
     auto c = n->last_child();
 
     for (auto const& val : rhs.coef)

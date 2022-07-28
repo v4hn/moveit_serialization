@@ -10,10 +10,10 @@ void write(c4::yml::NodeRef* n, moveit_msgs::AllowedCollisionMatrix const& rhs)
 {
     *n |= c4::yml::MAP;
 
-    n->append_child() << yml::key("entry_names") << rhs.entry_names;
+    n->append_child() << yml::key("entry_names") << rhs.entry_names |= yml::_WIP_STYLE_FLOW_SL;
     n->append_child() << yml::key("entry_values") << rhs.entry_values;
-    n->append_child() << yml::key("default_entry_names") << rhs.default_entry_names;
-    n->append_child() << yml::key("default_entry_values") << rhs.default_entry_values;
+    n->append_child() << yml::key("default_entry_names") << rhs.default_entry_names |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("default_entry_values") << rhs.default_entry_values |= yml::_WIP_STYLE_FLOW_SL;
 }
 
 bool read(c4::yml::NodeRef const& n, moveit_msgs::AllowedCollisionMatrix* rhs)

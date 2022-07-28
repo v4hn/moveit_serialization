@@ -10,10 +10,10 @@ void write(c4::yml::NodeRef* n, trajectory_msgs::JointTrajectoryPoint const& rhs
 {
     *n |= c4::yml::MAP;
 
-    n->append_child() << yml::key("positions") << rhs.positions;
-    n->append_child() << yml::key("velocities") << rhs.velocities;
-    n->append_child() << yml::key("accelerations") << rhs.accelerations;
-    n->append_child() << yml::key("effort") << rhs.effort;
+    n->append_child() << yml::key("positions") << rhs.positions |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("velocities") << rhs.velocities |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("accelerations") << rhs.accelerations |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("effort") << rhs.effort |= yml::_WIP_STYLE_FLOW_SL;
     n->append_child() << yml::key("time_from_start") << rhs.time_from_start;
 }
 

@@ -9,7 +9,7 @@ void write(c4::yml::NodeRef* n, shape_msgs::SolidPrimitive const& rhs)
     *n |= c4::yml::MAP;
 
     n->append_child() << yml::key("type") << rhs.type;
-    n->append_child() << yml::key("dimensions") << rhs.dimensions;
+    n->append_child() << yml::key("dimensions") << rhs.dimensions |= yml::_WIP_STYLE_FLOW_SL;
 }
 
 bool read(c4::yml::NodeRef const& n, shape_msgs::SolidPrimitive* rhs)

@@ -11,10 +11,10 @@ void write(c4::yml::NodeRef* n, sensor_msgs::JointState const& rhs)
     *n |= c4::yml::MAP;
 
     n->append_child() << yml::key("header") << rhs.header;
-    n->append_child() << yml::key("name") << rhs.name;
-    n->append_child() << yml::key("position") << rhs.position;
-    n->append_child() << yml::key("velocity") << rhs.velocity;
-    n->append_child() << yml::key("effort") << rhs.effort;
+    n->append_child() << yml::key("name") << rhs.name |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("position") << rhs.position |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("velocity") << rhs.velocity |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("effort") << rhs.effort |= yml::_WIP_STYLE_FLOW_SL;
 }
 
 bool read(c4::yml::NodeRef const& n, sensor_msgs::JointState* rhs)

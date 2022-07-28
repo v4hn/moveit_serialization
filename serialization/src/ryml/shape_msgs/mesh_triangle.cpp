@@ -6,6 +6,7 @@ namespace yml {
 void write(c4::yml::NodeRef* n, shape_msgs::MeshTriangle const& rhs)
 {
     *n |= c4::yml::SEQ;
+    *n |= c4::yml::_WIP_STYLE_FLOW_SL;
 
     for (auto const& v : rhs.vertex_indices)
         n->append_child() << v;

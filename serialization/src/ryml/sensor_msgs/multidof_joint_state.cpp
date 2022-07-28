@@ -14,10 +14,10 @@ void write(c4::yml::NodeRef* n, sensor_msgs::MultiDOFJointState const& rhs)
     *n |= c4::yml::MAP;
 
     n->append_child() << yml::key("header") << rhs.header;
-    n->append_child() << yml::key("joint_names") << rhs.joint_names;
-    n->append_child() << yml::key("transforms") << rhs.transforms;
-    n->append_child() << yml::key("twist") << rhs.twist;
-    n->append_child() << yml::key("wrench") << rhs.wrench;
+    n->append_child() << yml::key("joint_names") << rhs.joint_names |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("transforms") << rhs.transforms |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("twist") << rhs.twist |= yml::_WIP_STYLE_FLOW_SL;
+    n->append_child() << yml::key("wrench") << rhs.wrench |= yml::_WIP_STYLE_FLOW_SL;
 }
 
 bool read(c4::yml::NodeRef const& n, sensor_msgs::MultiDOFJointState* rhs)

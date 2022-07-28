@@ -12,7 +12,7 @@ void write(c4::yml::NodeRef* n, trajectory_msgs::JointTrajectory const& rhs)
     *n |= c4::yml::MAP;
 
     n->append_child() << yml::key("header") << rhs.header;
-    n->append_child() << yml::key("joint_names") << rhs.joint_names;
+    n->append_child() << yml::key("joint_names") << rhs.joint_names |= yml::_WIP_STYLE_FLOW_SL;
     n->append_child() << yml::key("points") << rhs.points;
 }
 
