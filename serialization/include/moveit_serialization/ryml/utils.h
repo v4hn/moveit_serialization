@@ -47,7 +47,7 @@ namespace c4 {
 namespace yml {
 
 /* Given */
-bool getValFromKeyChain(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target, c4::yml::NodeRef& scalar);
+bool getNodeFromKeyChainVal(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target, c4::yml::NodeRef& scalar);
 
 /**
  * c++14 equivalent of 'if constexpr' (c++17)
