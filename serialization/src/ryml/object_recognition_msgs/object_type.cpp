@@ -1,3 +1,4 @@
+#include <moveit_serialization/ryml/std/std.h>
 #include <moveit_serialization/ryml/object_recognition_msgs/object_type.h>
 
 namespace c4 {
