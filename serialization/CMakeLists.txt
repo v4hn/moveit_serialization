@@ -11,14 +11,16 @@ find_package(catkin REQUIRED COMPONENTS
 	moveit_serialization_yamlcpp
 )
 
+# ryml internal library includes
+set(ryml_INCLUDE_DIRS ext/ryml/src ext/ryml/ext/c4core/src)
+
 catkin_package(
 	LIBRARIES
     	${PROJECT_NAME}
         ryml
 	INCLUDE_DIRS
 		include
-        ext/ryml/src
-        ext/ryml/ext/c4core/src
+        ${ryml_INCLUDE_DIRS}
 	CATKIN_DEPENDS
 	    roscpp
 	    moveit_core
@@ -29,7 +31,7 @@ catkin_package(
 		EIGEN3
 )
 
-# add rapidyaml library
+# add ryml as an internal library
 # https://github.com/biojppm/rapidyaml/commit/d44a9b9d5f16f3ca078cea887d4d01441c234724
 add_subdirectory(ext/ryml ryml)
 
@@ -38,12 +40,9 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(include
 	${Boost_INCLUDE_DIRS}
 	${EIGEN3_INCLUDE_DIRS}
+    ${ryml_INCLUDE_DIRS}
 	${catkin_INCLUDE_DIRS}
-    ext/ryml/src
-    ext/ryml/ext/c4core/src
 )
-
-
 
 add_library(${PROJECT_NAME}
 	src/yaml-cpp/node_manipulation.cpp
@@ -138,12 +137,8 @@ add_library(${PROJECT_NAME}
     src/ryml/error_handler.cpp
 )
 
-
-
-
-
 add_executable(run_example src/example.cpp)
-target_link_libraries(run_example ${PROJECT_NAME} ryml::ryml ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(run_example ${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES} ryml::ryml)
 
 add_executable(ryml-quickstart ext/ryml/samples/quickstart.cpp)
 target_link_libraries(ryml-quickstart ${catkin_LIBRARIES} ryml::ryml)
