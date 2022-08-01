@@ -13,21 +13,19 @@ bool c4::yml::getNodeFromKeyChainVal(const c4::yml::NodeRef& source, const c4::y
     // std::cout << "type = " << target.type_str() << std::endl;
     // std::cout << target << std::endl;
 
-    if (not(source.type() == c4::yml::VAL || source.type() == c4::yml::KEYVAL))
-        if (source.type() != target.type())
-            return false;
-
-    if (source.type() == c4::yml::VAL || source.type() == c4::yml::KEYVAL) {
+    if (source.is_keyval() || source.is_val()) {
         if (!target.has_child(source.val()))
             return false;
 
         // clone value
         scalar.tree()->merge_with(target.tree(), target.find_child(source.val()).id(), ryml::NONE);
         return true;
+    } else {
+        if (source.type() != target.type())
+            return false;
+    }
 
-    } else if (source.type() == c4::yml::NONE)
-        return false;
-    else if (source.type() == c4::yml::MAP || source.type() == c4::yml::SEQ) {
+    if (source.is_container()) {
         if (source.num_children() > target.num_children())
             return false;
     }
