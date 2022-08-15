@@ -16,7 +16,7 @@ void write(c4::yml::NodeRef* n, geometry_msgs::Pose const& rhs)
 bool read(c4::yml::NodeRef const& n, geometry_msgs::Pose* rhs)
 {
     n["position"] >> rhs->position;
-    n["orientation"] >> rhs->position;
+    n["orientation"] >> rhs->orientation;
 
     return true;
 }
