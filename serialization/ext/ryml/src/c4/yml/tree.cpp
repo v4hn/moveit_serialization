@@ -240,9 +240,18 @@ NodeRef Tree::rootref()
 {
     return NodeRef(this, root_id());
 }
-NodeRef const Tree::rootref() const
+ConstNodeRef Tree::rootref() const
 {
-    return NodeRef(const_cast<Tree*>(this), root_id());
+    return ConstNodeRef(this, root_id());
+}
+
+ConstNodeRef Tree::crootref()
+{
+    return ConstNodeRef(this, root_id());
+}
+ConstNodeRef Tree::crootref() const
+{
+    return ConstNodeRef(this, root_id());
 }
 
 NodeRef Tree::ref(size_t id)
@@ -250,17 +259,28 @@ NodeRef Tree::ref(size_t id)
     _RYML_CB_ASSERT(m_callbacks, id != NONE && id >= 0 && id < m_size);
     return NodeRef(this, id);
 }
-NodeRef const Tree::ref(size_t id) const
+ConstNodeRef Tree::ref(size_t id) const
 {
     _RYML_CB_ASSERT(m_callbacks, id != NONE && id >= 0 && id < m_size);
-    return NodeRef(const_cast<Tree*>(this), id);
+    return ConstNodeRef(this, id);
+}
+
+ConstNodeRef Tree::cref(size_t id)
+{
+    _RYML_CB_ASSERT(m_callbacks, id != NONE && id >= 0 && id < m_size);
+    return ConstNodeRef(this, id);
+}
+ConstNodeRef Tree::cref(size_t id) const
+{
+    _RYML_CB_ASSERT(m_callbacks, id != NONE && id >= 0 && id < m_size);
+    return ConstNodeRef(this, id);
 }
 
 NodeRef Tree::operator[] (csubstr key)
 {
     return rootref()[key];
 }
-NodeRef const Tree::operator[] (csubstr key) const
+ConstNodeRef Tree::operator[] (csubstr key) const
 {
     return rootref()[key];
 }
@@ -269,7 +289,7 @@ NodeRef Tree::operator[] (size_t i)
 {
     return rootref()[i];
 }
-NodeRef const Tree::operator[] (size_t i) const
+ConstNodeRef Tree::operator[] (size_t i) const
 {
     return rootref()[i];
 }
@@ -278,9 +298,9 @@ NodeRef Tree::docref(size_t i)
 {
     return ref(doc(i));
 }
-NodeRef const Tree::docref(size_t i) const
+ConstNodeRef Tree::docref(size_t i) const
 {
-    return ref(doc(i));
+    return cref(doc(i));
 }
 
 
@@ -1279,6 +1299,7 @@ void Tree::merge_with(Tree const *src, size_t src_node, size_t dst_node)
     }
 }
 
+
 //-----------------------------------------------------------------------------
 
 bool Tree::has_all(Tree const* reftree, size_t refnode, size_t subject_node) const
@@ -1372,6 +1393,7 @@ bool Tree::_has_all_recursive(Tree const* reftree, size_t refnode, size_t subjec
         C4_NEVER_REACH();
     }
 }
+
 
 //-----------------------------------------------------------------------------
 
@@ -1630,9 +1652,7 @@ size_t Tree::num_children(size_t node) const
 {
     size_t count = 0;
     for(size_t i = first_child(node); i != NONE; i = next_sibling(i))
-    {
         ++count;
-    }
     return count;
 }
 
@@ -1928,7 +1948,7 @@ void Tree::resolve_tags()
         return;
     size_t needed_size = _count_resolved_tags_size(this, root_id());
     if(needed_size)
-        reserve_arena(arena_pos() + needed_size);
+        reserve_arena(arena_size() + needed_size);
     _resolve_tags(this, root_id());
 }
 
