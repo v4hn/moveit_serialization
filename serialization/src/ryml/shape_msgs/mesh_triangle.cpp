@@ -12,7 +12,7 @@ void write(c4::yml::NodeRef* n, shape_msgs::MeshTriangle const& rhs)
         n->append_child() << v;
 }
 
-bool read(c4::yml::NodeRef const& n, shape_msgs::MeshTriangle* rhs)
+bool read(c4::yml::ConstNodeRef const& n, shape_msgs::MeshTriangle* rhs)
 {
     n[0] >> rhs->vertex_indices[0];
     n[1] >> rhs->vertex_indices[1];

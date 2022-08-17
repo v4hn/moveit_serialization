@@ -17,7 +17,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::JointConstraint const& rhs)
     n->append_child() << yml::key("weight") << freal(rhs.weight);
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::JointConstraint* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::JointConstraint* rhs)
 {
     n["joint_name"] >> rhs->joint_name;
     n["position"] >> rhs->position;

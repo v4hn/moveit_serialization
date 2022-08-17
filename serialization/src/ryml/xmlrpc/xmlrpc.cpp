@@ -101,13 +101,13 @@ XmlRpc::XmlRpcValue decodeXmlRpcValue(const csubstr& substr)
     throw std::runtime_error("Cannot convert ryml::NodeRef to XmlRpc");
 }
 
-XmlRpc::XmlRpcValue decodeXmlRpcValue(NodeRef const& node)
+XmlRpc::XmlRpcValue decodeXmlRpcValue(ConstNodeRef const& node)
 {
     if (node.is_container()) {
         if (node.is_map()) {
             std::map<std::string, XmlRpc::XmlRpcValue> members;
 
-            for (NodeRef const& child : node.children()) {
+            for (ConstNodeRef const& child : node.children()) {
                 std::string key;
                 from_chars(child.key(), &key);
 
@@ -118,7 +118,7 @@ XmlRpc::XmlRpcValue decodeXmlRpcValue(NodeRef const& node)
         } else if (node.is_seq()) {
             std::vector<XmlRpc::XmlRpcValue> values;
 
-            for (NodeRef const& child : node.children())
+            for (ConstNodeRef const& child : node.children())
                 values.push_back(decodeXmlRpcValue(child));
 
             return XmlRpcValueCreator::createArray(values);
@@ -141,7 +141,7 @@ void write(c4::yml::NodeRef* n, XmlRpc::XmlRpcValue const& rhs)
     encodeXmlRpc(rhs, *n);
 }
 
-bool read(c4::yml::NodeRef const& n, XmlRpc::XmlRpcValue* rhs)
+bool read(c4::yml::ConstNodeRef const& n, XmlRpc::XmlRpcValue* rhs)
 {
     *rhs = decodeXmlRpcValue(n);
 

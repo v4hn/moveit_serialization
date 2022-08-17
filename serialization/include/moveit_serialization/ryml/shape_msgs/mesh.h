@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, shape_msgs::Mesh const& rhs);
-bool read(c4::yml::NodeRef const& n, shape_msgs::Mesh* rhs);
+bool read(c4::yml::ConstNodeRef const& n, shape_msgs::Mesh* rhs);
 
 }  // namespace yml
 }  // namespace c4

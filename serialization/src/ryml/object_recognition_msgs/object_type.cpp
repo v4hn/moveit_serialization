@@ -12,7 +12,7 @@ void write(c4::yml::NodeRef* n, object_recognition_msgs::ObjectType const& rhs)
     n->append_child() << yml::key("db") << rhs.db;
 }
 
-bool read(c4::yml::NodeRef const& n, object_recognition_msgs::ObjectType* rhs)
+bool read(c4::yml::ConstNodeRef const& n, object_recognition_msgs::ObjectType* rhs)
 {
     if (n.has_child("key"))
         n["key"] >> rhs->key;

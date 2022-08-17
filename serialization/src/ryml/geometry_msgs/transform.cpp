@@ -13,7 +13,7 @@ void write(c4::yml::NodeRef* n, geometry_msgs::Transform const& rhs)
     n->append_child() << yml::key("rotation") << rhs.rotation;
 }
 
-bool read(c4::yml::NodeRef const& n, geometry_msgs::Transform* rhs)
+bool read(c4::yml::ConstNodeRef const& n, geometry_msgs::Transform* rhs)
 {
     n["translation"] >> rhs->translation;
     n["rotation"] >> rhs->rotation;

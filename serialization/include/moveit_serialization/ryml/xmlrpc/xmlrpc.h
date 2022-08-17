@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, XmlRpc::XmlRpcValue const& rhs);
-bool read(c4::yml::NodeRef const& n, XmlRpc::XmlRpcValue* rhs);
+bool read(c4::yml::ConstNodeRef const& n, XmlRpc::XmlRpcValue* rhs);
 
 }  // namespace yml
 }  // namespace c4

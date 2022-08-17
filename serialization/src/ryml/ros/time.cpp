@@ -9,7 +9,7 @@ void write(c4::yml::NodeRef* n, ros::Time const& rhs)
     *n << freal(rhs.toSec());
 }
 
-bool read(c4::yml::NodeRef const& n, ros::Time* rhs)
+bool read(c4::yml::ConstNodeRef const& n, ros::Time* rhs)
 {
     double secs{ 0.0 };
     n >> secs;

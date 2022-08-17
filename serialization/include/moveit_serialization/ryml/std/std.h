@@ -58,7 +58,7 @@ void write(c4::yml::NodeRef* n, std::pair<K, V> const& pair)
 }
 
 template <class K, class V>
-bool read(c4::yml::NodeRef const& n, std::pair<K, V>* pair)
+bool read(c4::yml::ConstNodeRef const& n, std::pair<K, V>* pair)
 {
     if (!n.is_seq() || n.num_children() != 2)
         return false;

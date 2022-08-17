@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, object_recognition_msgs::ObjectType const& rhs);
-bool read(c4::yml::NodeRef const& n, object_recognition_msgs::ObjectType* rhs);
+bool read(c4::yml::ConstNodeRef const& n, object_recognition_msgs::ObjectType* rhs);
 
 }  // namespace yml
 }  // namespace c4

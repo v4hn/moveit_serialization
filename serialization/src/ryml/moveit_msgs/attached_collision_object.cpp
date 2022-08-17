@@ -18,7 +18,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::AttachedCollisionObject const& rhs)
     n->append_child() << yml::key("weight") << freal(rhs.weight);
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::AttachedCollisionObject* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::AttachedCollisionObject* rhs)
 {
     if (n.has_child("link_name"))
         n["link_name"] >> rhs->link_name;

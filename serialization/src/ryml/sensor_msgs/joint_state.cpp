@@ -17,7 +17,7 @@ void write(c4::yml::NodeRef* n, sensor_msgs::JointState const& rhs)
     n->append_child() << yml::key("effort") << rhs.effort |= yml::_WIP_STYLE_FLOW_SL;
 }
 
-bool read(c4::yml::NodeRef const& n, sensor_msgs::JointState* rhs)
+bool read(c4::yml::ConstNodeRef const& n, sensor_msgs::JointState* rhs)
 {
     n["header"] >> rhs->header;
     n["name"] >> rhs->name;

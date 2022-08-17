@@ -18,7 +18,7 @@ void write(c4::yml::NodeRef* n, std_msgs::Header const& rhs)
     n->append_child() << yml::key("frame_id") << rhs.frame_id;
 }
 
-bool read(c4::yml::NodeRef const& n, std_msgs::Header* rhs)
+bool read(c4::yml::ConstNodeRef const& n, std_msgs::Header* rhs)
 {
     n["frame_id"] >> rhs->frame_id;
 

@@ -18,7 +18,7 @@ void write(c4::yml::NodeRef* n, octomap_msgs::Octomap const& rhs)
     n->append_child() << yml::key("data") << rhs.data;
 }
 
-bool read(c4::yml::NodeRef const& n, octomap_msgs::Octomap* rhs)
+bool read(c4::yml::ConstNodeRef const& n, octomap_msgs::Octomap* rhs)
 {
     if (n.has_child("header"))
         n["header"] >> rhs->header;

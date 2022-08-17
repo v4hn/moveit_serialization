@@ -2,7 +2,7 @@
 #include <moveit_serialization/ryml/ryml.h>
 #include <iostream>
 /* Given */
-bool c4::yml::getNodeFromKeyChainVal(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target,
+bool c4::yml::getNodeFromKeyChainVal(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target,
                                      c4::yml::NodeRef& scalar)
 {
     // std::cout << "=== source ===" << std::endl;
@@ -34,7 +34,7 @@ bool c4::yml::getNodeFromKeyChainVal(const c4::yml::NodeRef& source, const c4::y
     if (source.is_map()) {
         bool result = true;
 
-        for (c4::yml::NodeRef const& child : source.children()) {
+        for (c4::yml::ConstNodeRef const& child : source.children()) {
             if (target.has_child(child.key()))
                 result = getNodeFromKeyChainVal(child, target[child.key()], scalar);
             else

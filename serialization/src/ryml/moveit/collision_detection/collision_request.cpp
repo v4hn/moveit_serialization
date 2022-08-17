@@ -31,7 +31,7 @@ void write(c4::yml::NodeRef* n, collision_detection::CollisionRequest const& rhs
     n->append_child() << yml::key("group_name") << rhs.group_name;
 }
 
-bool read(c4::yml::NodeRef const& n, collision_detection::CollisionRequest* rhs)
+bool read(c4::yml::ConstNodeRef const& n, collision_detection::CollisionRequest* rhs)
 {
     n["distance"] >> rhs->distance;
     n["cost"] >> rhs->cost;

@@ -16,7 +16,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::CartesianTrajectory const& rhs)
     n->append_child() << yml::key("points") << rhs.points;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::CartesianTrajectory* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::CartesianTrajectory* rhs)
 {
     if (n.has_child("header"))
         n["header"] >> rhs->header;

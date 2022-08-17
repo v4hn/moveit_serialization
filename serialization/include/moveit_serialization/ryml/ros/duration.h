@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, ros::Duration const& rhs);
-bool read(c4::yml::NodeRef const& n, ros::Duration* rhs);
+bool read(c4::yml::ConstNodeRef const& n, ros::Duration* rhs);
 
 }  // namespace yml
 }  // namespace c4

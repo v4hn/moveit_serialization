@@ -30,7 +30,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::CollisionObject const& rhs)
     n->append_child() << yml::key("operation") << rhs.operation;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::CollisionObject* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::CollisionObject* rhs)
 {
     if (n.has_child("header"))
         n["header"] >> rhs->header;

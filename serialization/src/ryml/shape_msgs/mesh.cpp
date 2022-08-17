@@ -15,7 +15,7 @@ void write(c4::yml::NodeRef* n, shape_msgs::Mesh const& rhs)
     n->append_child() << yml::key("vertices") << rhs.vertices;
 }
 
-bool read(c4::yml::NodeRef const& n, shape_msgs::Mesh* rhs)
+bool read(c4::yml::ConstNodeRef const& n, shape_msgs::Mesh* rhs)
 {
     if (n.has_child("triangles"))
         n["triangles"] >> rhs->triangles;

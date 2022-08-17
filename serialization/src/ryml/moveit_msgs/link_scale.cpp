@@ -14,7 +14,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::LinkScale const& rhs)
     n->append_child() << yml::key("scale") << freal(rhs.scale);
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::LinkScale* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::LinkScale* rhs)
 {
     if (n.has_child("link_name"))
         n["link_name"] >> rhs->link_name;

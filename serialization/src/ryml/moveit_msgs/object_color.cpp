@@ -14,7 +14,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::ObjectColor const& rhs)
     n->append_child() << yml::key("color") << rhs.color;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::ObjectColor* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::ObjectColor* rhs)
 {
     if (n.has_child("id"))
         n["id"] >> rhs->id;

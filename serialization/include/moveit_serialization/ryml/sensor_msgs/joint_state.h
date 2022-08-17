@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, sensor_msgs::JointState const& rhs);
-bool read(c4::yml::NodeRef const& n, sensor_msgs::JointState* rhs);
+bool read(c4::yml::ConstNodeRef const& n, sensor_msgs::JointState* rhs);
 
 }  // namespace yml
 }  // namespace c4

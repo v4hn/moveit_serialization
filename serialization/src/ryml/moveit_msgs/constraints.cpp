@@ -20,7 +20,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::Constraints const& rhs)
     n->append_child() << yml::key("visibility_constraints") << rhs.visibility_constraints;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::Constraints* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::Constraints* rhs)
 {
     if (n.has_child("name"))
         n["name"] >> rhs->name;

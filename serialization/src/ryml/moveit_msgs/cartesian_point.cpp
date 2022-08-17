@@ -16,7 +16,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::CartesianPoint const& rhs)
     n->append_child() << yml::key("acceleration") << rhs.acceleration;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::CartesianPoint* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::CartesianPoint* rhs)
 {
     if (n.has_child("pose"))
         n["pose"] >> rhs->pose;

@@ -20,7 +20,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::VisibilityConstraint const& rhs)
     n->append_child() << yml::key("weight") << freal(rhs.weight);
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::VisibilityConstraint* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::VisibilityConstraint* rhs)
 {
     if (n.has_child("target_radius"))
         n["target_radius"] >> rhs->target_radius;

@@ -12,7 +12,7 @@ void write(c4::yml::NodeRef* n, shape_msgs::SolidPrimitive const& rhs)
     n->append_child() << yml::key("dimensions") << rhs.dimensions |= yml::_WIP_STYLE_FLOW_SL;
 }
 
-bool read(c4::yml::NodeRef const& n, shape_msgs::SolidPrimitive* rhs)
+bool read(c4::yml::ConstNodeRef const& n, shape_msgs::SolidPrimitive* rhs)
 {
     n["type"] >> rhs->type;
     n["dimensions"] >> rhs->dimensions;

@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, octomap_msgs::Octomap const& rhs);
-bool read(c4::yml::NodeRef const& n, octomap_msgs::Octomap* rhs);
+bool read(c4::yml::ConstNodeRef const& n, octomap_msgs::Octomap* rhs);
 
 }  // namespace yml
 }  // namespace c4

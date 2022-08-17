@@ -47,7 +47,8 @@ namespace c4 {
 namespace yml {
 
 /* Given */
-bool getNodeFromKeyChainVal(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target, c4::yml::NodeRef& scalar);
+bool getNodeFromKeyChainVal(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target,
+                            c4::yml::NodeRef& scalar);
 
 /**
  * c++14 equivalent of 'if constexpr' (c++17)
@@ -71,32 +72,32 @@ auto dispatch()
 template <typename... Ts>
 struct scalar_compare
 {
-    bool equality(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+    bool equality(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
     {
         return _impl_equality<0>(source, target);
     }
 
-    bool non_equality(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+    bool non_equality(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
     {
         return !_impl_equality<0>(source, target);
     }
 
-    bool lower_then(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+    bool lower_then(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
     {
         return _impl_lower_then<0>(source, target);
     }
 
-    bool greater_then(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+    bool greater_then(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
     {
         return _impl_greater_then<0>(source, target);
     }
 
-    bool lower_equal(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+    bool lower_equal(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
     {
         return !_impl_greater_then<0>(source, target);
     }
 
-    bool greater_equal(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+    bool greater_equal(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
     {
         return !_impl_lower_then<0>(source, target);
     }
@@ -106,7 +107,7 @@ private:
     constexpr static std::size_t TUPLE_SIZE = std::tuple_size<TypeTuple>::value;
 
     template <std::size_t N>
-    bool _impl_equality(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+    bool _impl_equality(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
     {
         return dispatch(std::integral_constant<bool, N == TUPLE_SIZE>{})(
             // 0, aka false branch:
@@ -131,7 +132,7 @@ private:
     }
 
     template <std::size_t N>
-    bool _impl_greater_then(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+    bool _impl_greater_then(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
     {
         return dispatch(std::integral_constant<bool, N == TUPLE_SIZE>{})(
             // 0, aka false branch:
@@ -155,7 +156,7 @@ private:
     }
 
     template <std::size_t N>
-    bool _impl_lower_then(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+    bool _impl_lower_then(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
     {
         return dispatch(std::integral_constant<bool, N == TUPLE_SIZE>{})(
             // 0, aka false branch:
@@ -180,10 +181,10 @@ private:
 };
 
 template <class... Args>
-bool scalar_compare_eq(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target);
+bool scalar_compare_eq(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target);
 
 template <class T, class... Args>
-bool helper_compare_eq(const c4::yml::NodeRef& source, const c4::yml::NodeRef& target)
+bool helper_compare_eq(const c4::yml::ConstNodeRef& source, const c4::yml::ConstNodeRef& target)
 {
     try {
         T src;

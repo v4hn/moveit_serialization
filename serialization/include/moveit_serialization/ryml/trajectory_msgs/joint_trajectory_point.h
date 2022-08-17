@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, trajectory_msgs::JointTrajectoryPoint const& rhs);
-bool read(c4::yml::NodeRef const& n, trajectory_msgs::JointTrajectoryPoint* rhs);
+bool read(c4::yml::ConstNodeRef const& n, trajectory_msgs::JointTrajectoryPoint* rhs);
 
 }  // namespace yml
 }  // namespace c4

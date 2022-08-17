@@ -28,7 +28,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::PlanningScene const& rhs)
     n->append_child() << yml::key("is_diff") << fmt::boolalpha(rhs.is_diff);
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::PlanningScene* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::PlanningScene* rhs)
 {
     if (n.has_child("name"))
         n["name"] >> rhs->name;

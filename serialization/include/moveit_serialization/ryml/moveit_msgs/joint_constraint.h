@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, moveit_msgs::JointConstraint const& rhs);
-bool read(c4::yml::NodeRef const& n, moveit_msgs::JointConstraint* rhs);
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::JointConstraint* rhs);
 
 }  // namespace yml
 }  // namespace c4

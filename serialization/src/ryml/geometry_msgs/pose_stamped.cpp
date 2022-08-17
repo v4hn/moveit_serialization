@@ -13,7 +13,7 @@ void write(c4::yml::NodeRef* n, geometry_msgs::PoseStamped const& rhs)
     n->append_child() << yml::key("pose") << rhs.pose;
 }
 
-bool read(c4::yml::NodeRef const& n, geometry_msgs::PoseStamped* rhs)
+bool read(c4::yml::ConstNodeRef const& n, geometry_msgs::PoseStamped* rhs)
 {
     n["header"] >> rhs->header;
     n["pose"] >> rhs->pose;

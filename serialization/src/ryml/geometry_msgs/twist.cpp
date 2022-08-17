@@ -12,7 +12,7 @@ void write(c4::yml::NodeRef* n, geometry_msgs::Twist const& rhs)
     n->append_child() << yml::key("angular") << rhs.angular;
 }
 
-bool read(c4::yml::NodeRef const& n, geometry_msgs::Twist* rhs)
+bool read(c4::yml::ConstNodeRef const& n, geometry_msgs::Twist* rhs)
 {
     n["linear"] >> rhs->linear;
     n["angular"] >> rhs->angular;

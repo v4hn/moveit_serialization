@@ -12,7 +12,7 @@ void write(c4::yml::NodeRef* n, geometry_msgs::Wrench const& rhs)
     n->append_child() << yml::key("torque") << rhs.torque;
 }
 
-bool read(c4::yml::NodeRef const& n, geometry_msgs::Wrench* rhs)
+bool read(c4::yml::ConstNodeRef const& n, geometry_msgs::Wrench* rhs)
 {
     n["force"] >> rhs->force;
     n["torque"] >> rhs->torque;

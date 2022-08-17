@@ -14,7 +14,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::CartesianTrajectoryPoint const& rhs
     n->append_child() << yml::key("time_from_start") << rhs.time_from_start;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::CartesianTrajectoryPoint* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::CartesianTrajectoryPoint* rhs)
 {
     if (n.has_child("point"))
         n["point"] >> rhs->point;

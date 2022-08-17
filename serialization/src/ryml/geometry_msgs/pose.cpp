@@ -13,7 +13,7 @@ void write(c4::yml::NodeRef* n, geometry_msgs::Pose const& rhs)
     n->append_child() << yml::key("orientation") << rhs.orientation;
 }
 
-bool read(c4::yml::NodeRef const& n, geometry_msgs::Pose* rhs)
+bool read(c4::yml::ConstNodeRef const& n, geometry_msgs::Pose* rhs)
 {
     n["position"] >> rhs->position;
     n["orientation"] >> rhs->orientation;

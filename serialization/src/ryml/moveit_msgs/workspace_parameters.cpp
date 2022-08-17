@@ -15,7 +15,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::WorkspaceParameters const& rhs)
     n->append_child() << yml::key("max_corner") << rhs.max_corner;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::WorkspaceParameters* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::WorkspaceParameters* rhs)
 {
     if (n.has_child("header"))
         n["header"] >> rhs->header;

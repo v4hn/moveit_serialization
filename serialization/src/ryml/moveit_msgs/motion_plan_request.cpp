@@ -32,7 +32,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::MotionPlanRequest const& rhs)
     n->append_child() << yml::key("max_cartesian_speed") << freal(rhs.max_cartesian_speed);
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::MotionPlanRequest* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::MotionPlanRequest* rhs)
 {
     if (n.has_child("workspace_parameters"))
         n["workspace_parameters"] >> rhs->workspace_parameters;

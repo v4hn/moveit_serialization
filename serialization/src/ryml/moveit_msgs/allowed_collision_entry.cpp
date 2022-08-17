@@ -12,7 +12,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::AllowedCollisionEntry const& rhs)
     n->append_child() << yml::key("enabled") << rhs.enabled |= yml::_WIP_STYLE_FLOW_SL;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::AllowedCollisionEntry* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::AllowedCollisionEntry* rhs)
 {
     if (n.has_child("enabled"))
         n["enabled"] >> rhs->enabled;

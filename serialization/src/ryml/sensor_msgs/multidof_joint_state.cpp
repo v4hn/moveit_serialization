@@ -20,7 +20,7 @@ void write(c4::yml::NodeRef* n, sensor_msgs::MultiDOFJointState const& rhs)
     n->append_child() << yml::key("wrench") << rhs.wrench |= yml::_WIP_STYLE_FLOW_SL;
 }
 
-bool read(c4::yml::NodeRef const& n, sensor_msgs::MultiDOFJointState* rhs)
+bool read(c4::yml::ConstNodeRef const& n, sensor_msgs::MultiDOFJointState* rhs)
 {
     n["header"] >> rhs->header;
     n["joint_names"] >> rhs->joint_names;

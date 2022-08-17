@@ -13,7 +13,7 @@ void write(c4::yml::NodeRef* n, geometry_msgs::Vector3 const& rhs)
     n->append_child() << yml::key("z") << freal(rhs.z);
 }
 
-bool read(c4::yml::NodeRef const& n, geometry_msgs::Vector3* rhs)
+bool read(c4::yml::ConstNodeRef const& n, geometry_msgs::Vector3* rhs)
 {
     n["x"] >> rhs->x;
     n["y"] >> rhs->y;

@@ -18,7 +18,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::RobotState const& rhs)
     n->append_child() << yml::key("is_diff") << fmt::boolalpha(rhs.is_diff);
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::RobotState* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::RobotState* rhs)
 {
     if (n.has_child("joint_state"))
         n["joint_state"] >> rhs->joint_state;

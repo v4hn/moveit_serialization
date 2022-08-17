@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, std_msgs::ColorRGBA const& rhs);
-bool read(c4::yml::NodeRef const& n, std_msgs::ColorRGBA* rhs);
+bool read(c4::yml::ConstNodeRef const& n, std_msgs::ColorRGBA* rhs);
 
 }  // namespace yml
 }  // namespace c4

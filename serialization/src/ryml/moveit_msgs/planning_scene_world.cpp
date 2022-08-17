@@ -15,7 +15,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::PlanningSceneWorld const& rhs)
     n->append_child() << yml::key("octomap") << rhs.octomap;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::PlanningSceneWorld* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::PlanningSceneWorld* rhs)
 {
     if (n.has_child("collision_objects"))
         n["collision_objects"] >> rhs->collision_objects;

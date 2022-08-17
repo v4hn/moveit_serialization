@@ -14,7 +14,7 @@ void write(c4::yml::NodeRef* n, geometry_msgs::Quaternion const& rhs)
     n->append_child() << yml::key("w") << freal(rhs.w);
 }
 
-bool read(c4::yml::NodeRef const& n, geometry_msgs::Quaternion* rhs)
+bool read(c4::yml::ConstNodeRef const& n, geometry_msgs::Quaternion* rhs)
 {
     n["x"] >> rhs->x;
     n["y"] >> rhs->y;

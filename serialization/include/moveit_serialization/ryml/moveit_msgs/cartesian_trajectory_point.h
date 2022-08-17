@@ -46,7 +46,7 @@ namespace c4 {
 namespace yml {
 
 void write(c4::yml::NodeRef* n, moveit_msgs::CartesianTrajectoryPoint const& rhs);
-bool read(c4::yml::NodeRef const& n, moveit_msgs::CartesianTrajectoryPoint* rhs);
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::CartesianTrajectoryPoint* rhs);
 
 }  // namespace yml
 }  // namespace c4

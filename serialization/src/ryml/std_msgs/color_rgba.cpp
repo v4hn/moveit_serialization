@@ -14,7 +14,7 @@ void write(c4::yml::NodeRef* n, std_msgs::ColorRGBA const& rhs)
     n->append_child() << yml::key("a") << freal(rhs.a);
 }
 
-bool read(c4::yml::NodeRef const& n, std_msgs::ColorRGBA* rhs)
+bool read(c4::yml::ConstNodeRef const& n, std_msgs::ColorRGBA* rhs)
 {
     n["r"] >> rhs->r;
     n["g"] >> rhs->g;

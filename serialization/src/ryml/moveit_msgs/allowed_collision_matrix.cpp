@@ -16,7 +16,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::AllowedCollisionMatrix const& rhs)
     n->append_child() << yml::key("default_entry_values") << rhs.default_entry_values |= yml::_WIP_STYLE_FLOW_SL;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::AllowedCollisionMatrix* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::AllowedCollisionMatrix* rhs)
 {
     if (n.has_child("entry_names"))
         n["entry_names"] >> rhs->entry_names;

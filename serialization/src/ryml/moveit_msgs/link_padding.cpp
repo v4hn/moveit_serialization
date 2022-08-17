@@ -14,7 +14,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::LinkPadding const& rhs)
     n->append_child() << yml::key("padding") << freal(rhs.padding);
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::LinkPadding* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::LinkPadding* rhs)
 {
     if (n.has_child("link_name"))
         n["link_name"] >> rhs->link_name;

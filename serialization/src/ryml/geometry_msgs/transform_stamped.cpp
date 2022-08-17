@@ -16,7 +16,7 @@ void write(c4::yml::NodeRef* n, geometry_msgs::TransformStamped const& rhs)
     n->append_child() << yml::key("transform") << rhs.transform;
 }
 
-bool read(c4::yml::NodeRef const& n, geometry_msgs::TransformStamped* rhs)
+bool read(c4::yml::ConstNodeRef const& n, geometry_msgs::TransformStamped* rhs)
 {
     n["header"] >> rhs->header;
     n["child_frame_id"] >> rhs->child_frame_id;

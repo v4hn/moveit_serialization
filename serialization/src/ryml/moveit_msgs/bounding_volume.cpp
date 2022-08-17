@@ -18,7 +18,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::BoundingVolume const& rhs)
     n->append_child() << yml::key("mesh_poses") << rhs.mesh_poses;
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::BoundingVolume* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::BoundingVolume* rhs)
 {
     if (n.has_child("primitives"))
         n["primitives"] >> rhs->primitives;

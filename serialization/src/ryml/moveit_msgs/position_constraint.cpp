@@ -20,7 +20,7 @@ void write(c4::yml::NodeRef* n, moveit_msgs::PositionConstraint const& rhs)
     n->append_child() << yml::key("weight") << freal(rhs.weight);
 }
 
-bool read(c4::yml::NodeRef const& n, moveit_msgs::PositionConstraint* rhs)
+bool read(c4::yml::ConstNodeRef const& n, moveit_msgs::PositionConstraint* rhs)
 {
     if (n.has_child("header"))
         n["header"] >> rhs->header;

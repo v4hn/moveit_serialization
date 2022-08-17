@@ -17,7 +17,7 @@ void write(c4::yml::NodeRef* n, trajectory_msgs::JointTrajectoryPoint const& rhs
     n->append_child() << yml::key("time_from_start") << rhs.time_from_start;
 }
 
-bool read(c4::yml::NodeRef const& n, trajectory_msgs::JointTrajectoryPoint* rhs)
+bool read(c4::yml::ConstNodeRef const& n, trajectory_msgs::JointTrajectoryPoint* rhs)
 {
     if (n.has_child("positions"))
         n["positions"] >> rhs->positions;
