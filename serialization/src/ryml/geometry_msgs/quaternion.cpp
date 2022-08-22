@@ -16,11 +16,17 @@ void write(c4::yml::NodeRef* n, geometry_msgs::Quaternion const& rhs)
 
 bool read(c4::yml::ConstNodeRef const& n, geometry_msgs::Quaternion* rhs)
 {
-    n["x"] >> rhs->x;
-    n["y"] >> rhs->y;
-    n["z"] >> rhs->z;
-    n["w"] >> rhs->w;
-
+    if (n.is_seq()) {
+        n[0] >> rhs->x;
+        n[1] >> rhs->y;
+        n[2] >> rhs->z;
+        n[3] >> rhs->w;
+    } else {
+        n["x"] >> rhs->x;
+        n["y"] >> rhs->y;
+        n["z"] >> rhs->z;
+        n["w"] >> rhs->w;
+    }
     return true;
 }
 
