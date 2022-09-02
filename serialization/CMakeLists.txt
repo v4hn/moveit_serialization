@@ -8,7 +8,6 @@ find_package(catkin REQUIRED COMPONENTS
 	roscpp
 	moveit_core
 	moveit_msgs
-	moveit_serialization_yamlcpp
 )
 
 # ryml internal library includes
@@ -25,7 +24,6 @@ catkin_package(
 	    roscpp
 	    moveit_core
 		moveit_msgs
-	    moveit_serialization_yamlcpp
 	DEPENDS
 	    Boost
 		EIGEN3
@@ -45,19 +43,6 @@ include_directories(include
 )
 
 add_library(${PROJECT_NAME}
-	src/yaml-cpp/node_manipulation.cpp
-	src/yaml-cpp/conversion/utilities.cpp
-	src/yaml-cpp/conversion/ros.cpp
-	src/yaml-cpp/conversion/std_msgs.cpp
-	src/yaml-cpp/conversion/geometry_msgs.cpp
-	src/yaml-cpp/conversion/shape_msgs.cpp
-	src/yaml-cpp/conversion/sensor_msgs.cpp
-	src/yaml-cpp/conversion/octomap_msgs.cpp
-	src/yaml-cpp/conversion/trajectory_msgs.cpp
-	src/yaml-cpp/conversion/collision_detection.cpp
-	src/yaml-cpp/conversion/object_recognition_msgs.cpp
-	src/yaml-cpp/conversion/moveit_msgs.cpp
-
 	# ros
 	src/ryml/ros/duration.cpp
 	src/ryml/ros/time.cpp
@@ -137,15 +122,11 @@ add_library(${PROJECT_NAME}
     src/ryml/error_handler.cpp
 )
 
-add_executable(run_example src/example.cpp)
-target_link_libraries(run_example ${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES} ryml::ryml)
-
 add_executable(ryml-quickstart ext/ryml/samples/quickstart.cpp)
 target_link_libraries(ryml-quickstart ${catkin_LIBRARIES} ryml::ryml)
 
 install(TARGETS
     ${PROJECT_NAME}
-    run_example
     ryml-quickstart
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
