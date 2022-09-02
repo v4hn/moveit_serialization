@@ -9,7 +9,7 @@ Serializer for moveit_msgs. Currently supports yaml serialization through yaml-c
 
 ## rapidyaml
 **[BETA]** One of the fastest yaml parser and emiter available. Built internally to avoid unwanted changes to the global error handler.<br>
-Current version: https://github.com/captain-yoshi/rapidyaml/commit/f58c6b8b556fc72f96ffaf7d883b1c2742e4b24b
+Current version: https://github.com/captain-yoshi/rapidyaml/commit/2ee74c1d940ff61bfc1afc357ec5f28113e6a325
 
 
 ## yaml-cpp
