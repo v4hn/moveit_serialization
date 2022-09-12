@@ -1,17 +1,11 @@
 # ryu does not have a cmakelists
 
-set(C4CORE_BM_USE_RYU ON)
-
-if(MSVC AND (CMAKE_SIZEOF_VOID_P EQUAL 4))
-    set(C4CORE_BM_USE_RYU OFF)
-endif()
-
 if(C4CORE_BM_USE_RYU)
     enable_language(C)
 
     c4_download_remote_proj(ryu RYU_DIR
         GIT_REPOSITORY https://github.com/ulfjack/ryu
-        GIT_TAG master)
+        GIT_TAG master GIT_SHALLOW ON)
     set(RYU_HDR
         ${RYU_DIR}/ryu/common.h
         ${RYU_DIR}/ryu/d2fixed_full_table.h

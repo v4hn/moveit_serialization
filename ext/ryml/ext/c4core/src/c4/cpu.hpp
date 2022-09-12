@@ -48,13 +48,14 @@
        #elif defined(__ARM_ARCH_7__) || defined(_ARM_ARCH_7)    \
         || defined(__ARM_ARCH_7A__) || defined(__ARM_ARCH_7R__) \
         || defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_7S__) \
+        || defined(__ARM_ARCH_7EM__) \
         || (defined(__TARGET_ARCH_ARM) && __TARGET_ARCH_ARM >= 7) \
         || (defined(_M_ARM) && _M_ARM >= 7)
            #define C4_CPU_ARMV7
        #elif defined(__ARM_ARCH_6__) || defined(__ARM_ARCH_6J__) \
         || defined(__ARM_ARCH_6T2__) || defined(__ARM_ARCH_6Z__) \
         || defined(__ARM_ARCH_6K__)  || defined(__ARM_ARCH_6ZK__) \
-        || defined(__ARM_ARCH_6M__) \
+        || defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_6KZ__) \
         || (defined(__TARGET_ARCH_ARM) && __TARGET_ARCH_ARM >= 6)
            #define C4_CPU_ARMV6
        #elif defined(__ARM_ARCH_5TEJ__) \

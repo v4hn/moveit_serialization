@@ -42,6 +42,30 @@ bare-metal](https://github.com/biojppm/c4core/issues/63) as well as
 moment it's not easy to add automated tests to the CI, so for now
 these are not in the list of official architectures.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+- [c4core - C++ core utilities](#c4core---c-core-utilities)
+    - [Obtaining c4core](#obtaining-c4core)
+    - [Using c4core in your project](#using-c4core-in-your-project)
+        - [CMake](#cmake)
+        - [Bazel](#bazel)
+        - [Header-only](#header-only)
+        - [Package managers](#package-managers)
+    - [Quick tour](#quick-tour)
+        - [Writeable string views: c4::substr and c4::csubstr](#writeable-string-views-c4substr-and-c4csubstr)
+        - [Value <-> character interoperation](#value---character-interoperation)
+        - [String formatting and parsing](#string-formatting-and-parsing)
+        - [`c4::span` and `c4::blob`](#c4span-and-c4blob)
+        - [Enums and enum symbols](#enums-and-enum-symbols)
+        - [Bitmasks and bitmask symbols](#bitmasks-and-bitmask-symbols)
+        - [Base64 encoding / decoding](#base64-encoding--decoding)
+        - [Fuzzy float comparison](#fuzzy-float-comparison)
+        - [Multi-platform / multi-compiler utilities](#multi-platform--multi-compiler-utilities)
+        - [Runtime assertions and error handling](#runtime-assertions-and-error-handling)
+        - [Memory allocation](#memory-allocation)
+        - [Mass initialization/construction/destruction](#mass-initializationconstructiondestruction)
+
+<!-- markdown-toc end -->
+
 
 ## Obtaining c4core
 
@@ -60,19 +84,20 @@ init` followed by `git submodule update`.
 
 ## Using c4core in your project
 
-c4core is built with cmake, and assumes you also use cmake. Although c4core
-is NOT header-only, and currently has no install target, you can very easily
-use c4core in your project by using
-`add_subdirectory(${path_to_c4core_root})` in your CMakeLists.txt; this will
-add c4core as a subproject of your project. Doing this is not intrusive to
-your cmake project because c4core is fast to build (typically under 10s), and
-it also prefixes every cmake variable with `C4CORE_`. But more importantly
-this will enable you to compile c4core with the exact same compile settings
-used by your project.
+c4core can be built with [cmake](#cmake), or can be used header only. It can also be obtained through some package managers.
+
+### CMake
+
+The recommended way to use c4core is by making it part of your project
+by using `add_subdirectory(${path_to_c4core_root})` in your
+CMakeLists.txt. Doing this is not intrusive to your cmake project
+because c4core is fast to build, also prefixes every cmake
+variable with `C4CORE_`. But more importantly, this will enable you to
+compile c4core with the exact same compile settings used by your
+project.
 
 Here's a very quick complete example of setting up your project to use
-c4core:
-
+c4core as a cmake subproject:
 ```cmake
 project(foo)
 
@@ -81,11 +106,41 @@ add_subdirectory(c4core)
 add_library(foo foo.cpp)
 target_link_libraries(foo PUBLIC c4core) # that's it!
 ```
-
 Note above that the call to `target_link_libraries()` is using PUBLIC
 linking. This is required to make sure the include directories from `c4core`
-are transitively used.
+are transitively used by clients of `foo`.
 
+
+### Header-only
+
+If you prefer to pick a single header to get you quickly going, [there is an amalgamation tool](tools/amalgamate.py) which generates this header:
+```console
+[user@host c4core]$ python tools/amalgamate.py -h
+usage: amalgamate.py [-h] [--fastfloat | --no-fastfloat] [--stl | --no-stl] [output]
+
+positional arguments:
+  output          output file. defaults to stdout
+
+options:
+  -h, --help      show this help message and exit
+  --fastfloat     enable fastfloat library. this is the default.
+  --no-fastfloat  enable fastfloat library. the default is --fastfloat.
+  --stl           enable stl interop. this is the default.
+  --no-stl        enable stl interop. the default is --stl.
+```
+
+
+### Package managers
+
+c4core is available through the following package managers:
+
+  * [vcpkg](https://vcpkg.io/en/packages.html): `vcpkg install c4core`
+  * Arch Linux/Manjaro:
+    * [rapidyaml](https://aur.archlinux.org/packages/rapidyaml/)
+
+
+
+<!----------------------------------------------------->
 
 ## Quick tour
 
@@ -105,10 +160,10 @@ Here: [`#include <c4/charconv.hpp>`](src/c4/charconv.hpp)
 ```c++
 // TODO: elaborate on the topics:
 
-c4::read_dec(), c4::write_dec()
-c4::read_hex(), c4::write_hex()
-c4::read_oct(), c4::write_oct()
-c4::read_bin(), c4::write_bin()
+c4::digits_dec(), c4::read_dec(), c4::write_dec()
+c4::digits_hex(), c4::read_hex(), c4::write_hex()
+c4::digits_oct(), c4::read_oct(), c4::write_oct()
+c4::digits_bin(), c4::read_bin(), c4::write_bin()
 
 c4::utoa(), c4::atou()
 c4::itoa(), c4::atoi()
@@ -175,6 +230,24 @@ Here are the results:
 | `std::to_chars<i64>`     |  882.17 |  `std::from_chars<i64>`  |   646.18 |
 | `std::sprintf<i64>`      |  138.79 |  `std::scanf<i64>`       |    90.07 |
 | `std::stringstream<i64>` |   27.62 |  `std::stringstream<i64>`|    25.12 |
+
+
+Or here are plots for g++12.1 and VS2019 (from the same computer):
+
+| Linux gxx12.1 | Windows VS2019 |
+|---------------|----------------|
+| ![atox-u32-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-atox-mega_bytes_per_second-u32.png "atox-u32-linux") | ![atox-u32-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-atox-mega_bytes_per_second-u32.png "atox-u32-windows") |
+| ![atox-i32-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-atox-mega_bytes_per_second-i32.png "atox-i32-linux") | ![atox-i32-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-atox-mega_bytes_per_second-i32.png "atox-i32-windows") |
+| ![atox-u64-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-atox-mega_bytes_per_second-u64.png "atox-u64-linux") | ![atox-u64-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-atox-mega_bytes_per_second-u64.png "atox-u64-windows") |
+| ![atox-i64-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-atox-mega_bytes_per_second-i64.png "atox-i64-linux") | ![atox-i64-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-atox-mega_bytes_per_second-i64.png "atox-i64-windows") |
+| ![atof-double-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-atof-mega_bytes_per_second-double.png "atof-double-linux") | ![atof-double-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-atof-mega_bytes_per_second-double.png "atof-double-windows") |
+| ![atof-float-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-atof-mega_bytes_per_second-float.png "atof-float-linux") | ![atof-float-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-atof-mega_bytes_per_second-float.png "atof-float-windows") |
+|      |      |
+| ![xtoa-u32-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-xtoa-mega_bytes_per_second-u32.png "xtoa-u32-linux") | ![xtoa-u32-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-xtoa-mega_bytes_per_second-u32.png "xtoa-u32-windows") |
+| ![xtoa-i32-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-xtoa-mega_bytes_per_second-i32.png "xtoa-i32-linux") | ![xtoa-i32-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-xtoa-mega_bytes_per_second-i32.png "xtoa-i32-windows") |
+| ![xtoa-u64-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-xtoa-mega_bytes_per_second-u64.png "xtoa-u64-linux") | ![xtoa-u64-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-xtoa-mega_bytes_per_second-u64.png "xtoa-u64-windows") |
+| ![xtoa-i64-linux](doc/img/linux-x86_64-gxx12.1-Release/c4core-bm-charconv-xtoa-mega_bytes_per_second-i64.png "xtoa-i64-linux") | ![xtoa-i64-windows](doc/img/windows-x86_64-vs2019-Release/c4core-bm-charconv-xtoa-mega_bytes_per_second-i64.png "xtoa-i64-windows") |
+
 
 
 ### String formatting and parsing
@@ -246,8 +319,6 @@ c4::bm2str(), c4::str2bm()
 // TODO: elaborate on the topics:
 #include <c4/error.hpp>
 
-C4_LIKELY()/C4_UNLIKELY()
-
 C4_RESTRICT, $, c$, $$, c$$
 #include <c4/restrict.hpp>
 #include <c4/unrestrict.hpp>
@@ -258,6 +329,14 @@ C4_RESTRICT, $, c$, $$, c$$
 C4_UNREACHABLE()
 
 c4::type_name()
+
+// portable attributes
+C4_LIKELY()/C4_UNLIKELY()
+C4_ALWAYS_INLINE
+C4_CONST
+C4_PURE
+C4_HOT
+C4_COLD
 ```
 
 ### Runtime assertions and error handling
@@ -292,17 +371,11 @@ c4::Allocator
 ```c++
 // TODO: elaborate on the topics:
 
-c4::construct()/c4::construct_n()
-
-c4::destroy()/c4::destroy_n()
-
-c4::copy_construct()/c4::copy_construct_n()
-
-c4::copy_assign()/c4::copy_assign_n()
-
-c4::move_construct()/c4::move_construct_n()
-
-c4::move_assign()/c4::move_assign_n()
-
 c4::make_room()/c4::destroy_room()
+c4::construct()/c4::construct_n()
+c4::destroy()/c4::destroy_n()
+c4::copy_construct()/c4::copy_construct_n()
+c4::copy_assign()/c4::copy_assign_n()
+c4::move_construct()/c4::move_construct_n()
+c4::move_assign()/c4::move_assign_n()
 ```

@@ -119,8 +119,6 @@ int main() {
 
 ## Relation With Other Work
 
-The fastfloat algorithm is part of the [LLVM standard libraries](https://github.com/llvm/llvm-project/commit/87c016078ad72c46505461e4ff8bfa04819fe7ba). 
-
 The fast_float library provides a performance similar to that of the [fast_double_parser](https://github.com/lemire/fast_double_parser) library but using an updated algorithm reworked from the ground up, and while offering an API more in line with the expectations of C++ programmers. The fast_double_parser library is part of the [Microsoft LightGBM machine-learning framework](https://github.com/microsoft/LightGBM).
 
 ## Users
@@ -191,7 +189,7 @@ the command line help.
 
 You may directly download automatically generated single-header files:
 
-https://github.com/fastfloat/fast_float/releases/download/v3.4.0/fast_float.h
+https://github.com/fastfloat/fast_float/releases/download/v1.1.2/fast_float.h
 
 ## Credit
 

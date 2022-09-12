@@ -52,37 +52,54 @@
 #include "c4/szconv.hpp"
 
 #ifndef C4CORE_NO_FAST_FLOAT
-    C4_SUPPRESS_WARNING_GCC_WITH_PUSH("-Wsign-conversion")
-    C4_SUPPRESS_WARNING_GCC("-Warray-bounds")
-#if __GNUC__ >= 5
-    C4_SUPPRESS_WARNING_GCC("-Wshift-count-overflow")
-#endif
-#   include "c4/ext/fast_float.hpp"
-    C4_SUPPRESS_WARNING_GCC_POP
-#   define C4CORE_HAVE_FAST_FLOAT 1
-#   define C4CORE_HAVE_STD_FROMCHARS 0
 #   if (C4_CPP >= 17)
 #       if defined(_MSC_VER)
-#           if (C4_MSVC_VERSION >= C4_MSVC_VERSION_2019)
+#           if (C4_MSVC_VERSION >= C4_MSVC_VERSION_2019) // VS2017 and lower do not have these macros
 #               include <charconv>
 #               define C4CORE_HAVE_STD_TOCHARS 1
+#               define C4CORE_HAVE_STD_FROMCHARS 0 // prefer fast_float with MSVC
+#               define C4CORE_HAVE_FAST_FLOAT 1
 #           else
 #               define C4CORE_HAVE_STD_TOCHARS 0
+#               define C4CORE_HAVE_STD_FROMCHARS 0
+#               define C4CORE_HAVE_FAST_FLOAT 1
 #           endif
-#       else  // VS2017 and lower do not have these macros
-#           if __has_include(<charconv>) && __cpp_lib_to_chars
-#               define C4CORE_HAVE_STD_TOCHARS 1
+#       else
+#           if __has_include(<charconv>)
 #               include <charconv>
+#               if defined(__cpp_lib_to_chars)
+#                   define C4CORE_HAVE_STD_TOCHARS 1
+#                   define C4CORE_HAVE_STD_FROMCHARS 0 // glibc uses fast_float internally
+#                   define C4CORE_HAVE_FAST_FLOAT 1
+#               else
+#                   define C4CORE_HAVE_STD_TOCHARS 0
+#                   define C4CORE_HAVE_STD_FROMCHARS 0
+#                   define C4CORE_HAVE_FAST_FLOAT 1
+#               endif
 #           else
 #               define C4CORE_HAVE_STD_TOCHARS 0
+#               define C4CORE_HAVE_STD_FROMCHARS 0
+#               define C4CORE_HAVE_FAST_FLOAT 1
 #           endif
 #       endif
 #   else
 #       define C4CORE_HAVE_STD_TOCHARS 0
+#       define C4CORE_HAVE_STD_FROMCHARS 0
+#       define C4CORE_HAVE_FAST_FLOAT 1
+#   endif
+#   if C4CORE_HAVE_FAST_FLOAT
+        C4_SUPPRESS_WARNING_GCC_WITH_PUSH("-Wsign-conversion")
+        C4_SUPPRESS_WARNING_GCC("-Warray-bounds")
+#       if __GNUC__ >= 5
+            C4_SUPPRESS_WARNING_GCC("-Wshift-count-overflow")
+#       endif
+#       include "c4/ext/fast_float.hpp"
+        C4_SUPPRESS_WARNING_GCC_POP
 #   endif
 #elif (C4_CPP >= 17)
+#   define C4CORE_HAVE_FAST_FLOAT 0
 #   if defined(_MSC_VER)
-#       if (C4_MSVC_VERSION >= C4_MSVC_VERSION_2019)
+#       if (C4_MSVC_VERSION >= C4_MSVC_VERSION_2019) // VS2017 and lower do not have these macros
 #           include <charconv>
 #           define C4CORE_HAVE_STD_TOCHARS 1
 #           define C4CORE_HAVE_STD_FROMCHARS 1
@@ -90,11 +107,16 @@
 #           define C4CORE_HAVE_STD_TOCHARS 0
 #           define C4CORE_HAVE_STD_FROMCHARS 0
 #       endif
-#   else  // VS2017 and lower do not have these macros
-#       if __has_include(<charconv>) && __cpp_lib_to_chars
-#           define C4CORE_HAVE_STD_TOCHARS 1
-#           define C4CORE_HAVE_STD_FROMCHARS 1
+#   else
+#       if __has_include(<charconv>)
 #           include <charconv>
+#           if defined(__cpp_lib_to_chars)
+#               define C4CORE_HAVE_STD_TOCHARS 1
+#               define C4CORE_HAVE_STD_FROMCHARS 1 // glibc uses fast_float internally
+#           else
+#               define C4CORE_HAVE_STD_TOCHARS 0
+#               define C4CORE_HAVE_STD_FROMCHARS 0
+#           endif
 #       else
 #           define C4CORE_HAVE_STD_TOCHARS 0
 #           define C4CORE_HAVE_STD_FROMCHARS 0
@@ -103,10 +125,11 @@
 #else
 #   define C4CORE_HAVE_STD_TOCHARS 0
 #   define C4CORE_HAVE_STD_FROMCHARS 0
+#   define C4CORE_HAVE_FAST_FLOAT 0
 #endif
 
 
-#if !C4CORE_HAVE_STD_FROMCHARS && !defined(C4CORE_HAVE_FAST_FLOAT)
+#if !C4CORE_HAVE_STD_FROMCHARS
 #include <cstdio>
 #endif
 
@@ -132,51 +155,32 @@
 
 namespace c4 {
 
-typedef enum : uint8_t {
-    /** print the real number in floating point format (like %f) */
-    FTOA_FLOAT = 0,
-    /** print the real number in scientific format (like %e) */
-    FTOA_SCIENT = 1,
-    /** print the real number in flexible format (like %g) */
-    FTOA_FLEX = 2,
-    /** print the real number in hexadecimal format (like %a) */
-    FTOA_HEXA = 3,
-    _FTOA_COUNT
-} RealFormat_e;
-
-
-inline C4_CONSTEXPR14 char to_c_fmt(RealFormat_e f)
-{
-    constexpr const char fmt[] = {
-        'f',  // FTOA_FLOAT
-        'e',  // FTOA_SCIENT
-        'g',  // FTOA_FLEX
-        'a',  // FTOA_HEXA
-    };
-    C4_STATIC_ASSERT(C4_COUNTOF(fmt) == _FTOA_COUNT);
-    #if C4_CPP > 14
-    C4_ASSERT(f < _FTOA_COUNT);
-    #endif
-    return fmt[f];
-}
-
-
 #if C4CORE_HAVE_STD_TOCHARS
-inline C4_CONSTEXPR14 std::chars_format to_std_fmt(RealFormat_e f)
-{
-    constexpr const std::chars_format fmt[] = {
-        std::chars_format::fixed,       // FTOA_FLOAT
-        std::chars_format::scientific,  // FTOA_SCIENT
-        std::chars_format::general,     // FTOA_FLEX
-        std::chars_format::hex,         // FTOA_HEXA
-    };
-    C4_STATIC_ASSERT(C4_COUNTOF(fmt) == _FTOA_COUNT);
-    #if C4_CPP >= 14
-    C4_ASSERT(f < _FTOA_COUNT);
-    #endif
-    return fmt[f];
-}
-#endif // C4CORE_HAVE_STD_TOCHARS
+/** @warning Use only the symbol. Do not rely on the type or naked value of this enum. */
+typedef enum : std::underlying_type<std::chars_format>::type {
+    /** print the real number in floating point format (like %f) */
+    FTOA_FLOAT = static_cast<std::underlying_type<std::chars_format>::type>(std::chars_format::fixed),
+    /** print the real number in scientific format (like %e) */
+    FTOA_SCIENT = static_cast<std::underlying_type<std::chars_format>::type>(std::chars_format::scientific),
+    /** print the real number in flexible format (like %g) */
+    FTOA_FLEX = static_cast<std::underlying_type<std::chars_format>::type>(std::chars_format::general),
+    /** print the real number in hexadecimal format (like %a) */
+    FTOA_HEXA = static_cast<std::underlying_type<std::chars_format>::type>(std::chars_format::hex),
+} RealFormat_e;
+#else
+/** @warning Use only the symbol. Do not rely on the type or naked value of this enum. */
+typedef enum : char {
+    /** print the real number in floating point format (like %f) */
+    FTOA_FLOAT = 'f',
+    /** print the real number in scientific format (like %e) */
+    FTOA_SCIENT = 'e',
+    /** print the real number in flexible format (like %g) */
+    FTOA_FLEX = 'g',
+    /** print the real number in hexadecimal format (like %a) */
+    FTOA_HEXA = 'a',
+} RealFormat_e;
+#endif
+
 
 /** in some platforms, int,unsigned int
  *  are not any of int8_t...int64_t and
@@ -1108,7 +1112,7 @@ C4_ALWAYS_INLINE size_t itoa(substr buf, T v, T radix) noexcept
 
 
 /** same as c4::itoa(), but pad with zeroes on the left such that the
- * resulting string is @p num_digits wide, not account for radix
+ * resulting string is @p num_digits wide, not accounting for radix
  * prefix (0x,0o,0b). The @p radix must be 2, 8, 10 or 16.
  *
  * @note the resulting string is NOT zero-terminated.
@@ -1333,6 +1337,9 @@ C4_ALWAYS_INLINE size_t utoa(substr buf, T v, T radix, size_t num_digits) noexce
  * which case the result will wrap around the type's range.
  * This is similar to native behavior.
  *
+ * @note a positive sign is not accepted. ie, the string must not
+ * start with '+'
+ *
  * @see atoi_first() if the string is not trimmed to the value to read. */
 template<class T>
 C4_ALWAYS_INLINE bool atoi(csubstr str, T * C4_RESTRICT v) noexcept
@@ -1343,13 +1350,14 @@ C4_ALWAYS_INLINE bool atoi(csubstr str, T * C4_RESTRICT v) noexcept
     if(C4_UNLIKELY(str.len == 0))
         return false;
 
+    C4_ASSERT(str.str[0] != '+');
+
     T sign = 1;
     size_t start = 0;
     if(str.str[0] == '-')
     {
-        if(C4_UNLIKELY(str.len == 1))
+        if(C4_UNLIKELY(str.len == ++start))
             return false;
-        ++start;
         sign = -1;
     }
 
@@ -1673,17 +1681,18 @@ auto overflows(csubstr str)
 namespace detail {
 
 
+#if (!C4CORE_HAVE_STD_FROMCHARS)
 /** @see http://www.exploringbinary.com/ for many good examples on float-str conversion */
 template<size_t N>
 void get_real_format_str(char (& C4_RESTRICT fmt)[N], int precision, RealFormat_e formatting, const char* length_modifier="")
 {
     int iret;
     if(precision == -1)
-        iret = snprintf(fmt, sizeof(fmt), "%%%s%c", length_modifier, to_c_fmt(formatting));
+        iret = snprintf(fmt, sizeof(fmt), "%%%s%c", length_modifier, formatting);
     else if(precision == 0)
-        iret = snprintf(fmt, sizeof(fmt), "%%.%s%c", length_modifier, to_c_fmt(formatting));
+        iret = snprintf(fmt, sizeof(fmt), "%%.%s%c", length_modifier, formatting);
     else
-        iret = snprintf(fmt, sizeof(fmt), "%%.%d%s%c", precision, length_modifier, to_c_fmt(formatting));
+        iret = snprintf(fmt, sizeof(fmt), "%%.%d%s%c", precision, length_modifier, formatting);
     C4_ASSERT(iret >= 2 && size_t(iret) < sizeof(fmt));
     C4_UNUSED(iret);
 }
@@ -1728,8 +1737,10 @@ size_t print_one(substr str, const char* full_fmt, T v)
     return ret;
 #endif
 }
+#endif // (!C4CORE_HAVE_STD_FROMCHARS)
 
-#if !C4CORE_HAVE_STD_FROMCHARS && !defined(C4CORE_HAVE_FAST_FLOAT)
+
+#if (!C4CORE_HAVE_STD_FROMCHARS) && (!C4CORE_HAVE_FAST_FLOAT)
 /** scans a string using the given type format, while at the same time
  * allowing non-null-terminated strings AND guaranteeing that the given
  * string length is strictly respected, so that no buffer overflows
@@ -1766,24 +1777,28 @@ inline size_t scan_one(csubstr str, const char *type_fmt, T *v)
     C4_ASSERT(num_chars >= 0);
     return (size_t)(num_chars);
 }
-#endif
+#endif // (!C4CORE_HAVE_STD_FROMCHARS) && (!C4CORE_HAVE_FAST_FLOAT)
 
 
 #if C4CORE_HAVE_STD_TOCHARS
 template<class T>
-size_t rtoa(substr buf, T v, int precision=-1, RealFormat_e formatting=FTOA_FLEX)
+C4_ALWAYS_INLINE size_t rtoa(substr buf, T v, int precision=-1, RealFormat_e formatting=FTOA_FLEX) noexcept
 {
     std::to_chars_result result;
     size_t pos = 0;
     if(formatting == FTOA_HEXA)
     {
-        _c4append('0');
-        _c4append('x');
+        if(buf.len > size_t(2))
+        {
+            buf.str[0] = '0';
+            buf.str[1] = 'x';
+        }
+        pos += size_t(2);
     }
     if(precision == -1)
-        result = std::to_chars(buf.str + pos, buf.str + buf.len, v, to_std_fmt(formatting));
+        result = std::to_chars(buf.str + pos, buf.str + buf.len, v, (std::chars_format)formatting);
     else
-        result = std::to_chars(buf.str + pos, buf.str + buf.len, v, to_std_fmt(formatting), precision);
+        result = std::to_chars(buf.str + pos, buf.str + buf.len, v, (std::chars_format)formatting, precision);
     if(result.ec == std::errc())
     {
         // all good, no errors.
@@ -1807,6 +1822,85 @@ size_t rtoa(substr buf, T v, int precision=-1, RealFormat_e formatting=FTOA_FLEX
 }
 #endif // C4CORE_HAVE_STD_TOCHARS
 
+
+#if C4CORE_HAVE_FAST_FLOAT
+template<class T>
+C4_ALWAYS_INLINE bool scan_rhex(csubstr s, T *C4_RESTRICT val) noexcept
+{
+    C4_ASSERT(s.len > 0);
+    C4_ASSERT(s.str[0] != '-');
+    C4_ASSERT(s.str[0] != '+');
+    C4_ASSERT(!s.begins_with("0x"));
+    C4_ASSERT(!s.begins_with("0X"));
+    size_t pos = 0;
+    // integer part
+    for( ; pos < s.len; ++pos)
+    {
+        const char c = s.str[pos];
+        if(c >= '0' && c <= '9')
+            *val = *val * T(16) + T(c - '0');
+        else if(c >= 'a' && c <= 'f')
+            *val = *val * T(16) + T(c - 'a');
+        else if(c >= 'A' && c <= 'F')
+            *val = *val * T(16) + T(c - 'A');
+        else if(c == '.')
+        {
+            ++pos;
+            break; // follow on to mantissa
+        }
+        else if(c == 'p' || c == 'P')
+        {
+            ++pos;
+            goto power; // no mantissa given, jump to power
+        }
+        else
+        {
+            return false;
+        }
+    }
+    // mantissa
+    {
+        // 0.0625 == 1/16 == value of first digit after the comma
+        for(T digit = T(0.0625); pos < s.len; ++pos, digit /= T(16))
+        {
+            const char c = s.str[pos];
+            if(c >= '0' && c <= '9')
+                *val += digit * T(c - '0');
+            else if(c >= 'a' && c <= 'f')
+                *val += digit * T(c - 'a');
+            else if(c >= 'A' && c <= 'F')
+                *val += digit * T(c - 'A');
+            else if(c == 'p' || c == 'P')
+            {
+                ++pos;
+                goto power; // mantissa finished, jump to power
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+power:
+    if(C4_LIKELY(pos < s.len))
+    {
+        if(s.str[pos] == '+') // atoi() cannot handle a leading '+'
+            ++pos;
+        if(C4_LIKELY(pos < s.len))
+        {
+            int16_t powval;
+            if(C4_LIKELY(atoi(s.sub(pos), &powval)))
+            {
+                *val *= ipow<T, int16_t, 16>(powval);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+#endif
+
 } // namespace detail
 
 
@@ -1814,11 +1908,15 @@ size_t rtoa(substr buf, T v, int precision=-1, RealFormat_e formatting=FTOA_FLEX
 #undef _c4append
 
 
-/** Convert a single-precision real number to string.
- * The string will in general be NOT null-terminated.
- * For FTOA_FLEX, \p precision is the number of significand digits. Otherwise
- * \p precision is the number of decimals. */
-inline size_t ftoa(substr str, float v, int precision=-1, RealFormat_e formatting=FTOA_FLEX)
+/** Convert a single-precision real number to string.  The string will
+ * in general be NOT null-terminated.  For FTOA_FLEX, \p precision is
+ * the number of significand digits. Otherwise \p precision is the
+ * number of decimals. It is safe to call this function with an empty
+ * or too-small buffer.
+ *
+ * @return the size of the buffer needed to write the number
+ */
+C4_ALWAYS_INLINE size_t ftoa(substr str, float v, int precision=-1, RealFormat_e formatting=FTOA_FLEX) noexcept
 {
 #if C4CORE_HAVE_STD_TOCHARS
     return detail::rtoa(str, v, precision, formatting);
@@ -1830,14 +1928,15 @@ inline size_t ftoa(substr str, float v, int precision=-1, RealFormat_e formattin
 }
 
 
-/** Convert a double-precision real number to string.
- * The string will in general be NOT null-terminated.
- * For FTOA_FLEX, \p precision is the number of significand digits. Otherwise
- * \p precision is the number of decimals.
+/** Convert a double-precision real number to string.  The string will
+ * in general be NOT null-terminated.  For FTOA_FLEX, \p precision is
+ * the number of significand digits. Otherwise \p precision is the
+ * number of decimals. It is safe to call this function with an empty
+ * or too-small buffer.
  *
- * @return the number of characters written.
+ * @return the size of the buffer needed to write the number
  */
-inline size_t dtoa(substr str, double v, int precision=-1, RealFormat_e formatting=FTOA_FLEX)
+C4_ALWAYS_INLINE size_t dtoa(substr str, double v, int precision=-1, RealFormat_e formatting=FTOA_FLEX) noexcept
 {
 #if C4CORE_HAVE_STD_TOCHARS
     return detail::rtoa(str, v, precision, formatting);
@@ -1855,20 +1954,36 @@ inline size_t dtoa(substr str, double v, int precision=-1, RealFormat_e formatti
  * @return true iff the conversion succeeded
  * @see atof_first() if the string is not trimmed
  */
-inline bool atof(csubstr str, float * C4_RESTRICT v) noexcept
+C4_ALWAYS_INLINE bool atof(csubstr str, float * C4_RESTRICT v) noexcept
 {
+    C4_ASSERT(str.len > 0);
     C4_ASSERT(str.triml(" \r\t\n").len == str.len);
 #if C4CORE_HAVE_FAST_FLOAT
-    fast_float::from_chars_result result;
-    result = fast_float::from_chars(str.str, str.str + str.len, *v);
-    return result.ec == std::errc();
+    // fastfloat cannot parse hexadecimal floats
+    bool isneg = (str.str[0] == '-');
+    csubstr rem = str.sub(isneg || str.str[0] == '+');
+    if(!(rem.len >= 2 && (rem.str[0] == '0' && (rem.str[1] == 'x' || rem.str[1] == 'X'))))
+    {
+        fast_float::from_chars_result result;
+        result = fast_float::from_chars(str.str, str.str + str.len, *v);
+        return result.ec == std::errc();
+    }
+    else if(detail::scan_rhex(rem.sub(2), v))
+    {
+        *v *= isneg ? -1.f : 1.f;
+        return true;
+    }
+    return false;
 #elif C4CORE_HAVE_STD_FROMCHARS
     std::from_chars_result result;
     result = std::from_chars(str.str, str.str + str.len, *v);
     return result.ec == std::errc();
 #else
-    size_t ret = detail::scan_one(str, "f", v);
-    return ret != csubstr::npos;
+    csubstr rem = str.sub(str.str[0] == '-' || str.str[0] == '+');
+    if(!(rem.len >= 2 && (rem.str[0] == '0' && (rem.str[1] == 'x' || rem.str[1] == 'X'))))
+        return detail::scan_one(str, "f", v) != csubstr::npos;
+    else
+        return detail::scan_one(str, "a", v) != csubstr::npos;
 #endif
 }
 
@@ -1879,20 +1994,35 @@ inline bool atof(csubstr str, float * C4_RESTRICT v) noexcept
  * @return true iff the conversion succeeded
  * @see atod_first() if the string is not trimmed
  */
-inline bool atod(csubstr str, double * C4_RESTRICT v) noexcept
+C4_ALWAYS_INLINE bool atod(csubstr str, double * C4_RESTRICT v) noexcept
 {
     C4_ASSERT(str.triml(" \r\t\n").len == str.len);
 #if C4CORE_HAVE_FAST_FLOAT
-    fast_float::from_chars_result result;
-    result = fast_float::from_chars(str.str, str.str + str.len, *v);
-    return result.ec == std::errc();
+    // fastfloat cannot parse hexadecimal floats
+    bool isneg = (str.str[0] == '-');
+    csubstr rem = str.sub(isneg || str.str[0] == '+');
+    if(!(rem.len >= 2 && (rem.str[0] == '0' && (rem.str[1] == 'x' || rem.str[1] == 'X'))))
+    {
+        fast_float::from_chars_result result;
+        result = fast_float::from_chars(str.str, str.str + str.len, *v);
+        return result.ec == std::errc();
+    }
+    else if(detail::scan_rhex(rem.sub(2), v))
+    {
+        *v *= isneg ? -1. : 1.;
+        return true;
+    }
+    return false;
 #elif C4CORE_HAVE_STD_FROMCHARS
     std::from_chars_result result;
     result = std::from_chars(str.str, str.str + str.len, *v);
     return result.ec == std::errc();
 #else
-    size_t ret = detail::scan_one(str, "lf", v);
-    return ret != csubstr::npos;
+    csubstr rem = str.sub(str.str[0] == '-' || str.str[0] == '+');
+    if(!(rem.len >= 2 && (rem.str[0] == '0' && (rem.str[1] == 'x' || rem.str[1] == 'X'))))
+        return detail::scan_one(str, "lf", v) != csubstr::npos;
+    else
+        return detail::scan_one(str, "la", v) != csubstr::npos;
 #endif
 }
 
@@ -1960,6 +2090,9 @@ C4_ALWAYS_INLINE size_t xtoa(substr s,   int8_t v,   int8_t radix, size_t num_di
 C4_ALWAYS_INLINE size_t xtoa(substr s,  int16_t v,  int16_t radix, size_t num_digits) noexcept { return itoa(s, v, radix, num_digits); }
 C4_ALWAYS_INLINE size_t xtoa(substr s,  int32_t v,  int32_t radix, size_t num_digits) noexcept { return itoa(s, v, radix, num_digits); }
 C4_ALWAYS_INLINE size_t xtoa(substr s,  int64_t v,  int64_t radix, size_t num_digits) noexcept { return itoa(s, v, radix, num_digits); }
+
+C4_ALWAYS_INLINE size_t xtoa(substr s,  float v, int precision, RealFormat_e formatting=FTOA_FLEX) noexcept { return ftoa(s, v, precision, formatting); }
+C4_ALWAYS_INLINE size_t xtoa(substr s, double v, int precision, RealFormat_e formatting=FTOA_FLEX) noexcept { return dtoa(s, v, precision, formatting); }
 
 C4_ALWAYS_INLINE bool atox(csubstr s,  uint8_t *C4_RESTRICT v) noexcept { return atou(s, v); }
 C4_ALWAYS_INLINE bool atox(csubstr s, uint16_t *C4_RESTRICT v) noexcept { return atou(s, v); }
