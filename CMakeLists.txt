@@ -30,7 +30,7 @@ catkin_package(
 )
 
 # add ryml as an internal library
-# https://github.com/biojppm/rapidyaml/commit/d44a9b9d5f16f3ca078cea887d4d01441c234724
+# https://github.com/captain-yoshi/rapidyaml/commit/3b733dfa0135ffe2dbe11dae8eb04b6ddf203189
 add_subdirectory(ext/ryml ryml)
 
 set(CMAKE_CXX_STANDARD 14)
