@@ -33,8 +33,6 @@ catkin_package(
 # https://github.com/captain-yoshi/rapidyaml/commit/2f1f495400043d5f5c9945c815dfdb8668b0f255
 add_subdirectory(ext/ryml ryml)
 
-set(CMAKE_CXX_STANDARD 14)
-
 include_directories(include
 	${Boost_INCLUDE_DIRS}
 	${EIGEN3_INCLUDE_DIRS}
